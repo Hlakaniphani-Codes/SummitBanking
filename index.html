@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Summit Bank – Global Digital Banking</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://img.icons8.com/fluency/32/shield.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://img.icons8.com/fluency/16/shield.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://img.icons8.com/fluency/180/shield.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#111111',
+                            charcoal: '#1A1A1A',
+                            gold: '#7D6046',
+                            goldLight: '#907359',
+                            goldDim: '#684B31',
+                            slateText: '#555555',
+                            border: '#E5E5E5'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .goog-te-banner-frame { display: none !important; }
+        body { top: 0 !important; }
+        
+        .lang-selector-wrapper {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+        }
+        
+        .lang-selector-wrapper .lang-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: #111111;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+        
+        .lang-selector-wrapper .globe-icon {
+            color: #7D6046;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .hero-split-bg {
+            background-image: linear-gradient(rgba(17, 17, 17, 0.45), rgba(17, 17, 17, 0.75)), url('home.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background: #111111;
+            z-index: 1000;
+            transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 2.5rem;
+        }
+        .mobile-menu.open { right: 0; }
+        
+        .backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+        }
+        .backdrop.visible { opacity: 1; visibility: visible; }
+        
+        .ad-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .ad-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .service-card {
+            transition: all 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+            border-color: #7D6046;
+        }
+        
+        .flag-icon {
+            width: 24px;
+            height: 16px;
+            border-radius: 2px;
+            display: inline-block;
+            vertical-align: middle;
+            background-size: cover;
+            background-position: center;
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+        .flag-icon-us { background-image: url('https://flagcdn.com/w20/us.png'); }
+        .flag-icon-gb { background-image: url('https://flagcdn.com/w20/gb.png'); }
+        .flag-icon-eu { background-image: url('https://flagcdn.com/w20/eu.png'); }
+        .flag-icon-jp { background-image: url('https://flagcdn.com/w20/jp.png'); }
+        .flag-icon-ca { background-image: url('https://flagcdn.com/w20/ca.png'); }
+        .flag-icon-ch { background-image: url('https://flagcdn.com/w20/ch.png'); }
+        .flag-icon-za { background-image: url('https://flagcdn.com/w20/za.png'); }
+        .flag-icon-au { background-image: url('https://flagcdn.com/w20/au.png'); }
+        .flag-icon-ng { background-image: url('https://flagcdn.com/w20/ng.png'); }
+        .flag-icon-ke { background-image: url('https://flagcdn.com/w20/ke.png'); }
+        .flag-icon-in { background-image: url('https://flagcdn.com/w20/in.png'); }
+        .flag-icon-br { background-image: url('https://flagcdn.com/w20/br.png'); }
+        .flag-icon-mx { background-image: url('https://flagcdn.com/w20/mx.png'); }
+        .flag-icon-ae { background-image: url('https://flagcdn.com/w20/ae.png'); }
+        .flag-icon-sg { background-image: url('https://flagcdn.com/w20/sg.png'); }
+        .flag-icon-kr { background-image: url('https://flagcdn.com/w20/kr.png'); }
+        .flag-icon-cn { background-image: url('https://flagcdn.com/w20/cn.png'); }
+    </style>
+</head>
+<body class="font-sans antialiased bg-white text-slate-800">
+
+    <!-- ===== TOP ACCENT BRAND BAR ===== -->
+    <div class="bg-brand-gold h-[5px] w-full"></div>
+
+    <!-- ===== SECONDARY INFORMATION STRIP ===== -->
+    <div class="bg-white border-b border-brand-border text-brand-dark py-2 text-[10px] tracking-widest text-center uppercase font-semibold">
+        Summit Bank &bull; Global Digital Corporate & Retail Banking
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="sticky top-0 z-50 bg-white border-b border-brand-border shadow-sm">
+        <div class="container mx-auto px-6 lg:px-12 py-5 flex items-center justify-between">
+
+            <a href="index.html" class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-brand-dark flex items-center justify-center text-white text-xs font-black tracking-tighter rounded-sm">SB</div>
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold tracking-tight text-brand-dark">Summit <span class="text-brand-gold font-medium">Bank</span></span>
+                    <span class="text-[8px] uppercase tracking-widest text-brand-slateText font-bold">Global Digital Utilities</span>
+                </div>
+            </a>
+
+            <nav class="hidden lg:flex items-center gap-8 text-[11px] font-bold uppercase tracking-wider text-brand-slateText">
+                <a href="index.html" class="text-brand-dark border-b-2 border-brand-dark pb-1">Home</a>
+                <a href="#business" class="hover:text-brand-gold transition-colors">Business</a>
+                <a href="#personal" class="hover:text-brand-gold transition-colors">Personal</a>
+                <a href="#credit-cards" class="hover:text-brand-gold transition-colors">Credit Cards</a>
+                <a href="#loans" class="hover:text-brand-gold transition-colors">Loans</a>
+                <a href="#support" class="hover:text-brand-gold transition-colors">Support</a>
+            </nav>
+
+            <div class="hidden lg:flex items-center gap-6">
+                <div class="lang-selector-wrapper">
+                    <span class="globe-icon">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                        </svg>
+                    </span>
+                    <span class="lang-label">Select Language</span>
+                </div>
+                <a href="#" class="text-[11px] uppercase tracking-wider font-bold text-brand-dark hover:text-brand-gold transition-colors">Contact Us</a>
+                <a href="#" class="text-[11px] uppercase tracking-wider font-bold text-brand-gold hover:text-brand-goldDim transition-colors">Login</a>
+            </div>
+
+            <button id="menuToggle" class="lg:hidden text-brand-dark focus:outline-none p-1">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== MOBILE SIDENAV ===== -->
+    <div class="backdrop" id="menuBackdrop"></div>
+    <div class="mobile-menu flex flex-col" id="sideMenu">
+        <div class="flex justify-between items-center pb-6 border-b border-neutral-800">
+            <span class="text-lg font-bold tracking-tight text-white">Summit Bank</span>
+            <button id="closeMenuBtn" class="text-slate-400 hover:text-white text-2xl">&times;</button>
+        </div>
+        <nav class="flex flex-col gap-6 mt-8 text-xs font-semibold uppercase tracking-wider text-slate-300">
+            <a href="index.html" class="text-white font-bold">Home</a>
+            <a href="#business" class="hover:text-brand-gold transition-colors">Business</a>
+            <a href="#personal" class="hover:text-brand-gold transition-colors">Personal</a>
+            <a href="#credit-cards" class="hover:text-brand-gold transition-colors">Credit Cards</a>
+            <a href="#loans" class="hover:text-brand-gold transition-colors">Loans</a>
+            <a href="#support" class="hover:text-brand-gold transition-colors">Support</a>
+        </nav>
+        <div class="mt-auto pt-6 border-t border-neutral-800 text-[11px] text-slate-500">
+            <p>&copy; 2026 Summit Bank</p>
+        </div>
+    </div>
+
+    <main>
+
+        <!-- ===== HERO ===== -->
+        <section class="hero-split-bg min-h-[620px] flex items-center py-12 lg:py-20 relative" id="home">
+            <div class="container mx-auto px-6 lg:px-12 grid lg:grid-cols-12 gap-12 items-center relative z-10">
+                
+                <div class="lg:col-span-7 text-white space-y-6">
+                    <span class="text-[10px] uppercase tracking-widest font-extrabold bg-brand-gold px-3 py-1.5 inline-block text-white">
+                        Global Digital Banking
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight leading-tight text-white">
+                        SIMPLE QUICK <br><span class="font-bold text-white">SECURED</span>
+                    </h1>
+                    <p class="text-white/80 text-sm sm:text-base max-w-xl font-light leading-relaxed">
+                        Transfer Money Across The World In Real time
+                    </p>
+                    <p class="text-white/50 text-xs max-w-xl leading-relaxed">
+                        Summit Bank transformed the digital banking industry using data and technology more than ten years ago. We are now one of the largest digital banking providers, dedicated to innovating, simplifying, and humanizing banking.
+                    </p>
+                    
+                    <div class="grid grid-cols-3 gap-4 pt-6 max-w-md border-t border-white/20">
+                        <div>
+                            <h3 class="text-xl lg:text-2xl font-bold text-white">18.5M+</h3>
+                            <p class="text-[9px] text-white/50 uppercase tracking-widest font-bold mt-1">Active Users</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl lg:text-2xl font-bold text-white">190+</h3>
+                            <p class="text-[9px] text-white/50 uppercase tracking-widest font-bold mt-1">Countries</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl lg:text-2xl font-bold text-white">$2.4B</h3>
+                            <p class="text-[9px] text-white/50 uppercase tracking-widest font-bold mt-1">Transactions</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <a href="#" class="bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition inline-flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            Watch Video
+                        </a>
+                        <span class="text-white/50 text-xs flex items-center gap-2">
+                            <svg class="w-4 h-4 text-brand-gold" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                            Need Help? Contact our digital support
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Sign In / Enroll Card -->
+                <div class="lg:col-span-5 w-full max-w-md mx-auto bg-white rounded-sm shadow-2xl border border-brand-border p-6 sm:p-8">
+                    <div class="mb-6">
+                        <h2 class="text-lg font-bold text-brand-dark uppercase tracking-tight">Welcome to Summit Bank</h2>
+                        <div class="w-12 h-[2px] bg-brand-gold mt-2"></div>
+                        <p class="text-brand-slateText text-xs mt-2">Sign on to manage your accounts or enroll now.</p>
+                    </div>
+
+                    <form class="space-y-4 text-xs" onsubmit="event.preventDefault();">
+                        <div>
+                            <label class="block text-brand-dark font-bold uppercase tracking-wider mb-1.5">Username or Email</label>
+                            <input type="text" required class="w-full bg-slate-50 border border-brand-border rounded-sm p-3 text-brand-dark focus:outline-none focus:border-brand-gold text-xs transition" placeholder="Enter your username">
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-center mb-1.5">
+                                <label class="block text-brand-dark font-bold uppercase tracking-wider">Password</label>
+                                <button type="button" class="text-brand-gold hover:underline font-bold text-xs">Show</button>
+                            </div>
+                            <input type="password" required class="w-full bg-slate-50 border border-brand-border rounded-sm p-3 text-brand-dark focus:outline-none focus:border-brand-gold text-xs transition" placeholder="Enter your password">
+                        </div>
+
+                        <div class="flex items-center gap-2 py-1">
+                            <input type="checkbox" id="saveUser" class="w-4 h-4 text-brand-dark border-brand-border focus:ring-brand-dark cursor-pointer">
+                            <label for="saveUser" class="text-brand-slateText font-medium text-xs select-none cursor-pointer">Save username</label>
+                        </div>
+
+                        <div class="flex items-center gap-4 pt-2">
+                            <button type="submit" class="flex-1 bg-brand-dark hover:bg-neutral-900 text-white font-bold py-3.5 px-6 rounded-sm text-center tracking-wider uppercase text-[11px] transition">Sign On</button>
+                            <a href="signup.html" class="flex-1 border border-brand-dark text-brand-dark hover:bg-slate-50 font-bold py-3.5 px-6 rounded-sm text-center tracking-wider uppercase text-[11px] transition">Enroll</a>
+                        </div>
+                    </form>
+
+                    <div class="mt-6 pt-5 border-t border-brand-border flex flex-col gap-2.5 text-xs font-semibold text-brand-dark">
+                        <a href="#" class="hover:text-brand-gold transition-colors flex items-center gap-1">Sign on with a passkey</a>
+                        <a href="#" class="hover:text-brand-gold transition-colors">Forgot username or password?</a>
+                        <a href="#" class="hover:text-brand-gold transition-colors text-brand-slateText">Privacy, Cookies, and Legal</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===== AD BANNER ===== -->
+        <section class="py-10 bg-brand-dark">
+            <div class="container mx-auto px-6 lg:px-12">
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-brand-charcoal border border-neutral-800 rounded-sm p-6 text-white ad-card">
+                        <h4 class="font-bold text-xs uppercase tracking-widest text-brand-goldLight">Business Accounts</h4>
+                        <p class="text-slate-400 text-xs mt-2 leading-relaxed">Zero monthly fees for first 6 months</p>
+                        <a href="#" class="inline-block mt-4 text-white text-[11px] font-bold uppercase tracking-wider hover:text-brand-goldLight transition-colors">Learn More &rarr;</a>
+                    </div>
+                    <div class="bg-brand-charcoal border border-neutral-800 rounded-sm p-6 text-white ad-card">
+                        <h4 class="font-bold text-xs uppercase tracking-widest text-brand-goldLight">Premium Credit Cards</h4>
+                        <p class="text-slate-400 text-xs mt-2 leading-relaxed">Up to 5% cashback on all purchases</p>
+                        <a href="#" class="inline-block mt-4 text-white text-[11px] font-bold uppercase tracking-wider hover:text-brand-goldLight transition-colors">Apply Now &rarr;</a>
+                    </div>
+                    <div class="bg-brand-charcoal border border-neutral-800 rounded-sm p-6 text-white ad-card">
+                        <h4 class="font-bold text-xs uppercase tracking-widest text-brand-goldLight">High Yield Savings</h4>
+                        <p class="text-slate-400 text-xs mt-2 leading-relaxed">Earn 4.5% APY on your savings</p>
+                        <a href="#" class="inline-block mt-4 text-white text-[11px] font-bold uppercase tracking-wider hover:text-brand-goldLight transition-colors">Start Saving &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SERVICE QUICK ROUTING ===== -->
+        <section class="py-16 bg-slate-50 border-b border-brand-border" id="business">
+            <div class="container mx-auto px-6 lg:px-12 text-center max-w-5xl">
+                <h2 class="text-xs font-bold uppercase tracking-widest text-brand-slateText mb-8">Choose what is right for you</h2>
+                
+                <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+                    <a href="#business" class="service-card bg-white border border-brand-border rounded-sm p-5 flex flex-col items-center justify-center gap-3 shadow-sm hover:shadow-md">
+                        <svg class="w-5 h-5 text-brand-dark" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        <span class="text-[10px] font-bold text-brand-dark uppercase tracking-wider">Business</span>
+                    </a>
+                    <a href="#credit-cards" class="service-card bg-white border border-brand-border rounded-sm p-5 flex flex-col items-center justify-center gap-3 shadow-sm hover:shadow-md">
+                        <svg class="w-5 h-5 text-brand-dark" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                        <span class="text-[10px] font-bold text-brand-dark uppercase tracking-wider">Credit Cards</span>
+                    </a>
+                    <a href="#personal" class="service-card bg-white border border-brand-border rounded-sm p-5 flex flex-col items-center justify-center gap-3 shadow-sm hover:shadow-md">
+                        <svg class="w-5 h-5 text-brand-dark" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span class="text-[10px] font-bold text-brand-dark uppercase tracking-wider">Checking</span>
+                    </a>
+                    <a href="#support" class="service-card bg-white border border-brand-border rounded-sm p-5 flex flex-col items-center justify-center gap-3 shadow-sm hover:shadow-md">
+                        <svg class="w-5 h-5 text-brand-dark" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                        <span class="text-[10px] font-bold text-brand-dark uppercase tracking-wider">Travel</span>
+                    </a>
+                    <a href="#personal" class="service-card bg-white border border-brand-border rounded-sm p-5 flex flex-col items-center justify-center gap-3 shadow-sm hover:shadow-md">
+                        <svg class="w-5 h-5 text-brand-dark" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M12 14a2 2 0 110-4h4a2 2 0 110 4h-4z"></path></svg>
+                        <span class="text-[10px] font-bold text-brand-dark uppercase tracking-wider">Savings</span>
+                    </a>
+                    <a href="#loans" class="service-card bg-white border border-brand-border rounded-sm p-5 flex flex-col items-center justify-center gap-3 shadow-sm hover:shadow-md">
+                        <svg class="w-5 h-5 text-brand-dark" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                        <span class="text-[10px] font-bold text-brand-dark uppercase tracking-wider">Home Loans</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ABOUT US ===== -->
+        <section class="py-20 bg-white border-b border-brand-border" id="personal">
+            <div class="container mx-auto px-6 lg:px-12">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-xs font-bold uppercase tracking-widest text-brand-gold block mb-2">About Us</span>
+                    <h2 class="text-3xl font-light text-brand-dark tracking-tight">We revolutionized Digital Banking</h2>
+                    <div class="w-16 h-[2px] bg-brand-gold mx-auto mt-4"></div>
+                    <p class="text-brand-slateText text-xs mt-4 max-w-xl mx-auto leading-relaxed">We have grown to become one of the largest digital banking providers, committed to inventing, simplifying, and humanizing the banking experience.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div class="border border-brand-border rounded-sm p-8 hover:border-brand-gold shadow-sm transition bg-white">
+                        <div class="w-10 h-10 rounded-sm bg-slate-50 border border-brand-border flex items-center justify-center text-brand-dark mb-5">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h4 class="text-lg font-bold text-brand-dark mb-2">Powerful Mobile and Online App</h4>
+                        <p class="text-brand-slateText text-xs leading-relaxed">Our mobile app service is quick and easy to use, and you can get it from your app store.</p>
+                    </div>
+                    
+                    <div class="border border-brand-border rounded-sm p-8 hover:border-brand-gold shadow-sm transition bg-white">
+                        <div class="w-10 h-10 rounded-sm bg-slate-50 border border-brand-border flex items-center justify-center text-brand-dark mb-5">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <h4 class="text-lg font-bold text-brand-dark mb-2">Brings More Transparency and Speed</h4>
+                        <p class="text-brand-slateText text-xs leading-relaxed">Our digital banking services are transparent and quick, and we are building a reliable network.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== POPULAR CURRENCY TOOLS ===== -->
+        <section class="py-20 bg-slate-50 border-b border-brand-border">
+            <div class="container mx-auto px-6 lg:px-12">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-xs font-bold uppercase tracking-widest text-brand-gold block mb-2">Popular Currency Tools</span>
+                    <h2 class="text-3xl font-light text-brand-dark tracking-tight">Set Up and Exchange Money From Your Cards In A Minute</h2>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                    <div class="border border-brand-border rounded-sm p-8 bg-white hover:border-brand-gold shadow-sm transition">
+                        <div class="w-10 h-10 bg-slate-50 rounded-sm border border-brand-border flex items-center justify-center text-brand-dark mb-4">
+                            <svg class="w-5 h-5 text-brand-gold" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2"></path></svg>
+                        </div>
+                        <h4 class="text-base font-bold text-brand-dark mb-2">Historical Currency Rates</h4>
+                        <p class="text-brand-slateText text-xs leading-relaxed">Track and analyze rate trends over time to make informed decisions.</p>
+                    </div>
+
+                    <div class="border border-brand-border rounded-sm p-8 bg-white hover:border-brand-gold shadow-sm transition">
+                        <div class="w-10 h-10 bg-slate-50 rounded-sm border border-brand-border flex items-center justify-center text-brand-dark mb-4">
+                            <svg class="w-5 h-5 text-brand-gold" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h4 class="text-base font-bold text-brand-dark mb-2">Travel Expense Calculator</h4>
+                        <p class="text-brand-slateText text-xs leading-relaxed">Plan your trip budget with real time exchange rates.</p>
+                    </div>
+
+                    <div class="border border-brand-border rounded-sm p-8 bg-white hover:border-brand-gold shadow-sm transition">
+                        <div class="w-10 h-10 bg-slate-50 rounded-sm border border-brand-border flex items-center justify-center text-brand-dark mb-4">
+                            <svg class="w-5 h-5 text-brand-gold" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L22 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h4 class="text-base font-bold text-brand-dark mb-2">Currency Email Updates</h4>
+                        <p class="text-brand-slateText text-xs leading-relaxed">Get daily rate alerts delivered directly to your inbox.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== WHY CHOOSE US ===== -->
+        <section class="py-20 bg-brand-dark text-white" id="credit-cards">
+            <div class="container mx-auto px-6 lg:px-12">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-xs font-bold uppercase tracking-widest text-brand-goldLight block mb-2">Why Choose Us</span>
+                    <h2 class="text-3xl font-light tracking-tight text-white">We are innovative and digital</h2>
+                    <div class="w-16 h-[2px] bg-brand-gold mx-auto mt-4"></div>
+                    <p class="text-slate-400 text-xs mt-4 max-w-xl mx-auto leading-relaxed">Summit Bank transformed the credit card business using data and technology more than ten years ago. We are now one of the largest digital banking providers, dedicated to innovating, simplifying, and humanizing banking.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                    <div class="border border-neutral-800 bg-neutral-900/30 p-8 rounded-sm hover:border-brand-gold transition">
+                        <div class="w-12 h-12 mx-auto bg-brand-gold/10 border border-brand-gold/30 rounded-sm flex items-center justify-center text-brand-goldLight mb-4">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        </div>
+                        <h4 class="text-lg font-bold mb-2">Historical Currency Rates</h4>
+                        <p class="text-slate-400 text-sm leading-relaxed">Track and analyze rate trends over time to make informed decisions.</p>
+                    </div>
+                    <div class="border border-neutral-800 bg-neutral-900/30 p-8 rounded-sm hover:border-brand-gold transition">
+                        <div class="w-12 h-12 mx-auto bg-brand-gold/10 border border-brand-gold/30 rounded-sm flex items-center justify-center text-brand-goldLight mb-4">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                        <h4 class="text-lg font-bold mb-2">Travel Expense Calculator</h4>
+                        <p class="text-slate-400 text-sm leading-relaxed">Plan your trip budget with real time exchange rates.</p>
+                    </div>
+                    <div class="border border-neutral-800 bg-neutral-900/30 p-8 rounded-sm hover:border-brand-gold transition">
+                        <div class="w-12 h-12 mx-auto bg-brand-gold/10 border border-brand-gold/30 rounded-sm flex items-center justify-center text-brand-goldLight mb-4">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+                        </div>
+                        <h4 class="text-lg font-bold mb-2">Currency Email Updates</h4>
+                        <p class="text-slate-400 text-sm leading-relaxed">Get daily rate alerts delivered directly to your inbox.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== LIVE EXCHANGE RATES ===== -->
+        <section class="py-20 bg-white border-b border-brand-border" id="loans">
+            <div class="container mx-auto px-6 lg:px-12">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <span class="text-xs font-bold uppercase tracking-widest text-brand-gold block mb-2">Live Exchange Rates</span>
+                    <h2 class="text-3xl font-light text-brand-dark tracking-tight">Exchange Money Across The World In Real Time With Lowest Fees</h2>
+                </div>
+
+                <div class="max-w-4xl mx-auto border border-brand-border rounded-sm overflow-hidden shadow-sm">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-slate-50 border-b border-brand-border text-xs uppercase tracking-wider font-bold text-brand-slateText">
+                                <tr>
+                                    <th class="px-6 py-4">Currency</th>
+                                    <th class="px-6 py-4">Amount</th>
+                                    <th class="px-6 py-4">Change (24h)</th>
+                                    <th class="px-6 py-4">Chart</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 font-medium text-slate-900">
+                                <tr class="hover:bg-slate-50 transition">
+                                    <td class="px-6 py-4"><span class="flex items-center gap-2"><span class="flag-icon flag-icon-us"></span> US Dollar</span></td>
+                                    <td class="px-6 py-4">120.54</td>
+                                    <td class="px-6 py-4 text-emerald-600">+0.50%</td>
+                                    <td class="px-6 py-4 text-slate-300">Active</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 transition">
+                                    <td class="px-6 py-4"><span class="flex items-center gap-2"><span class="flag-icon flag-icon-jp"></span> Japanese Yen</span></td>
+                                    <td class="px-6 py-4">134.76</td>
+                                    <td class="px-6 py-4 text-emerald-600">+0.24%</td>
+                                    <td class="px-6 py-4 text-slate-300">Active</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 transition">
+                                    <td class="px-6 py-4"><span class="flex items-center gap-2"><span class="flag-icon flag-icon-gb"></span> British Pound</span></td>
+                                    <td class="px-6 py-4">245.10</td>
+                                    <td class="px-6 py-4 text-rose-600">-0.30%</td>
+                                    <td class="px-6 py-4 text-slate-300">Stable</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 transition">
+                                    <td class="px-6 py-4"><span class="flex items-center gap-2"><span class="flag-icon flag-icon-au"></span> New Zealand Dollar</span></td>
+                                    <td class="px-6 py-4">0.7564</td>
+                                    <td class="px-6 py-4 text-rose-600">-0.063%</td>
+                                    <td class="px-6 py-4 text-slate-300">Stable</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 transition">
+                                    <td class="px-6 py-4"><span class="flex items-center gap-2"><span class="flag-icon flag-icon-ca"></span> Canadian Dollar</span></td>
+                                    <td class="px-6 py-4">1.2741</td>
+                                    <td class="px-6 py-4 text-rose-600">-0.76%</td>
+                                    <td class="px-6 py-4 text-slate-300">Stable</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 transition">
+                                    <td class="px-6 py-4"><span class="flex items-center gap-2"><span class="flag-icon flag-icon-ch"></span> Swiss Franc</span></td>
+                                    <td class="px-6 py-4">15.063</td>
+                                    <td class="px-6 py-4 text-emerald-600">+0.26%</td>
+                                    <td class="px-6 py-4 text-slate-300">Active</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="bg-slate-50 border-t border-brand-border px-6 py-3 flex justify-between items-center text-xs font-semibold text-brand-slateText">
+                        <span>Last Updated Jan 20, 2022</span>
+                        <button class="text-brand-dark hover:underline font-bold">Add Currency</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== YOUR BENEFITS ===== -->
+        <section class="py-20 bg-slate-50 border-b border-brand-border">
+            <div class="container mx-auto px-6 lg:px-12 text-center">
+                <div class="max-w-3xl mx-auto mb-16">
+                    <span class="text-xs font-bold uppercase tracking-widest text-brand-gold block mb-2">Your Benefits</span>
+                    <h2 class="text-3xl font-light text-brand-dark tracking-tight">Your one-stop digital banking platform</h2>
+                    <div class="w-16 h-[2px] bg-brand-gold mx-auto mt-4"></div>
+                    <p class="text-brand-slateText text-xs mt-4 max-w-xl mx-auto leading-relaxed">Everything you need, all in one place — designed for speed, security, and simplicity.</p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto text-left">
+                    <div class="bg-white border border-brand-border rounded-sm p-6 hover:shadow-md transition">
+                        <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-brand-dark mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        </div>
+                        <h4 class="font-bold text-brand-dark mb-2">Global Coverage</h4>
+                        <p class="text-brand-slateText text-xs leading-relaxed">Send and receive money in 190+ countries.</p>
+                    </div>
+                    <div class="bg-white border border-brand-border rounded-sm p-6 hover:shadow-md transition">
+                        <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-brand-dark mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M12 14a2 2 0 110-4h4a2 2 0 110 4h-4z"/></svg>
+                        </div>
+                        <h4 class="font-bold text-brand-dark mb-2">Easy Transfer Method</h4>
+                        <p class="text-brand-slateText text-xs leading-relaxed">Intuitive workflows, minimal steps.</p>
+                    </div>
+                    <div class="bg-white border border-brand-border rounded-sm p-6 hover:shadow-md transition">
+                        <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-brand-dark mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+                        </div>
+                        <h4 class="font-bold text-brand-dark mb-2">Global 24/7 Support</h4>
+                        <p class="text-brand-slateText text-xs leading-relaxed">Dedicated team, always available.</p>
+                    </div>
+                    <div class="bg-white border border-brand-border rounded-sm p-6 hover:shadow-md transition">
+                        <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-brand-dark mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                        </div>
+                        <h4 class="font-bold text-brand-dark mb-2">Bank Level Security</h4>
+                        <p class="text-brand-slateText text-xs leading-relaxed">256-bit encryption &amp; fraud prevention.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CURRENCY PROFILES ===== -->
+        <section class="py-20 bg-white border-b border-brand-border">
+            <div class="container mx-auto px-6 lg:px-12">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <span class="text-xs font-bold uppercase tracking-widest text-brand-gold block mb-2">Currency Profile</span>
+                    <h2 class="text-3xl font-light text-brand-dark tracking-tight">Get These Local Account Details Just Like Pay A Local</h2>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                    <div class="border border-brand-border rounded-sm p-4 flex items-center gap-3 hover:border-brand-gold transition bg-white hover:shadow-sm">
+                        <span class="flag-icon flag-icon-us w-8 h-6"></span>
+                        <div><p class="font-bold text-brand-dark text-sm">USD</p><p class="text-brand-slateText text-[10px]">US Dollar</p></div>
+                    </div>
+                    <div class="border border-brand-border rounded-sm p-4 flex items-center gap-3 hover:border-brand-gold transition bg-white hover:shadow-sm">
+                        <span class="flag-icon flag-icon-eu w-8 h-6"></span>
+                        <div><p class="font-bold text-brand-dark text-sm">EUR</p><p class="text-brand-slateText text-[10px]">Euro</p></div>
+                    </div>
+                    <div class="border border-brand-border rounded-sm p-4 flex items-center gap-3 hover:border-brand-gold transition bg-white hover:shadow-sm">
+                        <span class="flag-icon flag-icon-gb w-8 h-6"></span>
+                        <div><p class="font-bold text-brand-dark text-sm">GBP</p><p class="text-brand-slateText text-[10px]">British Pound</p></div>
+                    </div>
+                    <div class="border border-brand-border rounded-sm p-4 flex items-center gap-3 hover:border-brand-gold transition bg-white hover:shadow-sm">
+                        <span class="flag-icon flag-icon-ca w-8 h-6"></span>
+                        <div><p class="font-bold text-brand-dark text-sm">CAD</p><p class="text-brand-slateText text-[10px]">Canadian Dollar</p></div>
+                    </div>
+                    <div class="border border-brand-border rounded-sm p-4 flex items-center gap-3 hover:border-brand-gold transition bg-white hover:shadow-sm">
+                        <span class="flag-icon flag-icon-kr w-8 h-6"></span>
+                        <div><p class="font-bold text-brand-dark text-sm">KRW</p><p class="text-brand-slateText text-[10px]">South Korean won</p></div>
+                    </div>
+                    <div class="border border-brand-border rounded-sm p-4 flex items-center gap-3 hover:border-brand-gold transition bg-white hover:shadow-sm">
+                        <span class="flag-icon flag-icon-jp w-8 h-6"></span>
+                        <div><p class="font-bold text-brand-dark text-sm">JPY</p><p class="text-brand-slateText text-[10px]">Japanese Yen</p></div>
+                    </div>
+                    <div class="border border-brand-border rounded-sm p-4 flex items-center gap-3 hover:border-brand-gold transition bg-white hover:shadow-sm">
+                        <span class="flag-icon flag-icon-cn w-8 h-6"></span>
+                        <div><p class="font-bold text-brand-dark text-sm">CNY</p><p class="text-brand-slateText text-[10px]">Chinese Yuan</p></div>
+                    </div>
+                    <div class="border border-brand-border rounded-sm p-4 flex items-center gap-3 hover:border-brand-gold transition bg-white hover:shadow-sm">
+                        <span class="flag-icon flag-icon-za w-8 h-6"></span>
+                        <div><p class="font-bold text-brand-dark text-sm">NZD</p><p class="text-brand-slateText text-[10px]">NZ Dollar</p></div>
+                    </div>
+                    <div class="border border-brand-border rounded-sm p-4 flex items-center gap-3 hover:border-brand-gold transition bg-white hover:shadow-sm">
+                        <span class="flag-icon flag-icon-ch w-8 h-6"></span>
+                        <div><p class="font-bold text-brand-dark text-sm">CHF</p><p class="text-brand-slateText text-[10px]">Swiss Franc</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== REVIEWS ===== -->
+        <section class="py-20 bg-slate-50 border-b border-brand-border">
+            <div class="container mx-auto px-6 lg:px-12">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-xs font-bold uppercase tracking-widest text-brand-gold block mb-2">Our Reviews</span>
+                    <h2 class="text-3xl font-light text-brand-dark tracking-tight">More Than 18M+ Happy Customers Trust Our Services</h2>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                    <div class="bg-white border border-brand-border rounded-sm p-6 hover:border-brand-gold transition shadow-sm">
+                        <div class="flex text-brand-gold text-sm mb-3">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        </div>
+                        <blockquote class="text-brand-slateText text-sm leading-relaxed">"The fastest international transfers I've ever experienced. No hidden fees, and the app is a dream."</blockquote>
+                        <div class="mt-4 pt-4 border-t border-brand-border flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-brand-dark flex items-center justify-center text-white font-bold text-sm">JD</div>
+                            <div><p class="font-bold text-brand-dark text-sm">Jonathan Davies</p><p class="text-brand-slateText text-[10px]">Business Owner</p></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border border-brand-border rounded-sm p-6 hover:border-brand-gold transition shadow-sm">
+                        <div class="flex text-brand-gold text-sm mb-3">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        </div>
+                        <blockquote class="text-brand-slateText text-sm leading-relaxed">"I use Summit for my freelance payments. The exchange rates are fair and the support team is incredible."</blockquote>
+                        <div class="mt-4 pt-4 border-t border-brand-border flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-brand-dark flex items-center justify-center text-white font-bold text-sm">SM</div>
+                            <div><p class="font-bold text-brand-dark text-sm">Sophia Martinez</p><p class="text-brand-slateText text-[10px]">Freelancer</p></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border border-brand-border rounded-sm p-6 hover:border-brand-gold transition shadow-sm">
+                        <div class="flex text-brand-gold text-sm mb-3">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        </div>
+                        <blockquote class="text-brand-slateText text-sm leading-relaxed">"Finally a digital bank that feels secure and actually cares about its customers. Highly recommended."</blockquote>
+                        <div class="mt-4 pt-4 border-t border-brand-border flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-brand-dark flex items-center justify-center text-white font-bold text-sm">AK</div>
+                            <div><p class="font-bold text-brand-dark text-sm">Aisha Khan</p><p class="text-brand-slateText text-[10px]">Tech Lead</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== BLOG ===== -->
+        <section class="py-20 bg-white border-b border-brand-border">
+            <div class="container mx-auto px-6 lg:px-12">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-xs font-bold uppercase tracking-widest text-brand-gold block mb-2">Our Blog</span>
+                    <h2 class="text-3xl font-light text-brand-dark tracking-tight">Keep Up To Date With Global Content From Our Trusted Team</h2>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                    <div class="border border-brand-border rounded-sm overflow-hidden hover:border-brand-gold transition shadow-sm">
+                        <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80');">
+                            <div class="h-full bg-gradient-to-t from-black/40 to-transparent flex items-end">
+                                <span class="bg-brand-gold text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 m-3">Corporate</span>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-bold text-brand-dark text-sm mb-1">5 Things You Need To Know Before Starting Business</h4>
+                            <div class="flex gap-4 text-[10px] text-brand-slateText">
+                                <span><svg class="w-3 h-3 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg> May 22, 2022</span>
+                                <span><svg class="w-3 h-3 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg> 10+ Comment</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border border-brand-border rounded-sm overflow-hidden hover:border-brand-gold transition shadow-sm">
+                        <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80');">
+                            <div class="h-full bg-gradient-to-t from-black/40 to-transparent flex items-end">
+                                <span class="bg-brand-gold text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 m-3">Consumer</span>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-bold text-brand-dark text-sm mb-1">Effect Of Inflation On Our Daily Expenditure</h4>
+                            <div class="flex gap-4 text-[10px] text-brand-slateText">
+                                <span><svg class="w-3 h-3 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg> May 13, 2022</span>
+                                <span><svg class="w-3 h-3 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg> 10+ Comment</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border border-brand-border rounded-sm overflow-hidden hover:border-brand-gold transition shadow-sm">
+                        <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=80');">
+                            <div class="h-full bg-gradient-to-t from-black/40 to-transparent flex items-end">
+                                <span class="bg-brand-gold text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 m-3">Finance</span>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-bold text-brand-dark text-sm mb-1">7 Tips To Get Best Exchange Rate In Currency</h4>
+                            <div class="flex gap-4 text-[10px] text-brand-slateText">
+                                <span><svg class="w-3 h-3 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg> Apr 15, 2022</span>
+                                <span><svg class="w-3 h-3 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg> 10+ Comment</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== FINAL CTA ===== -->
+        <section class="py-16 bg-cover bg-center relative" style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600&q=80');">
+            <div class="absolute inset-0 bg-gradient-to-r from-brand-dark/90 to-brand-dark/70"></div>
+            <div class="container mx-auto px-6 lg:px-12 relative z-10 text-center text-white">
+                <div class="max-w-2xl mx-auto">
+                    <span class="text-brand-gold text-xs font-bold uppercase tracking-widest">We are now one of the largest digital banking providers</span>
+                    <h2 class="text-3xl md:text-4xl font-light mt-2">Dedicated to innovating, simplifying, and humanizing banking.</h2>
+                    <div class="flex flex-wrap justify-center gap-4 mt-6">
+                        <a href="#" class="bg-brand-gold hover:bg-brand-goldLight text-white font-bold px-10 py-3.5 rounded-sm text-xs uppercase tracking-wider transition">Open Account Today</a>
+                        <a href="#personal" class="border border-white/30 hover:border-white text-white hover:bg-white/10 px-10 py-3.5 rounded-sm text-xs uppercase tracking-wider transition">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-brand-dark text-neutral-400 border-t border-neutral-800 pt-16 pb-8 text-xs font-medium">
+        <div class="container mx-auto px-6 lg:px-12 grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+            <div class="col-span-2 space-y-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-white/10 flex items-center justify-center text-white text-xs font-black rounded-sm">SB</div>
+                    <span class="text-base tracking-tight text-white font-bold">Summit Bank</span>
+                </div>
+                <p class="max-w-xs leading-relaxed text-neutral-500">Pioneering secure financial intelligence and asset structuring ecosystems natively on a global scale since 2012.</p>
+            </div>
+            <div>
+                <h5 class="text-white font-bold uppercase tracking-wider mb-4 text-[10px]">Company</h5>
+                <ul class="space-y-2">
+                    <li><a href="#personal" class="hover:text-white transition">About Us</a></li>
+                    <li><a href="#business" class="hover:text-white transition">Business Banking</a></li>
+                    <li><a href="#personal" class="hover:text-white transition">Personal Banking</a></li>
+                    <li><a href="#credit-cards" class="hover:text-white transition">Credit Cards</a></li>
+                    <li><a href="#loans" class="hover:text-white transition">Loans</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-white font-bold uppercase tracking-wider mb-4 text-[10px]">Resources</h5>
+                <ul class="space-y-2">
+                    <li><a href="#support" class="hover:text-white transition">Contact Us</a></li>
+                    <li><a href="#" class="hover:text-white transition">FAQ's</a></li>
+                    <li><a href="#" class="hover:text-white transition">Download App</a></li>
+                    <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-white transition">Terms &amp; Conditions</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-white font-bold uppercase tracking-wider mb-4 text-[10px]">Transfer Money</h5>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-white transition">Register/Login</a></li>
+                    <li><a href="#" class="hover:text-white transition">IBank Transfer</a></li>
+                    <li><a href="#" class="hover:text-white transition">USA Money Transfer</a></li>
+                    <li><a href="#" class="hover:text-white transition">UK Money Transfer</a></li>
+                    <li><a href="#" class="hover:text-white transition">Euro Money Transfer</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Contact Info Row -->
+        <div class="container mx-auto px-6 lg:px-12 border-t border-neutral-800 pt-6 pb-4 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-neutral-600">
+            <div class="flex flex-wrap justify-center gap-6 text-neutral-400">
+                <span><svg class="w-3 h-3 inline mr-1 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> 301 East Water Street, Charlottesville, VA 22904 Virginia</span>
+                <span><svg class="w-3 h-3 inline mr-1 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> Summit Bank</span>
+                <span><svg class="w-3 h-3 inline mr-1 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg> VIP ONLY</span>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-6 lg:px-12 border-t border-neutral-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-neutral-600">
+            <p>&copy; 2026 Summit Bank. All rights reserved.</p>
+            <div class="flex gap-4">
+                <a href="#" class="text-neutral-400 hover:text-brand-gold transition"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0zM7.08 20.47H3.56V8.97h3.52v11.5zM5.32 7.43c-1.13 0-2.04-.92-2.04-2.05 0-1.13.91-2.05 2.04-2.05s2.04.92 2.04 2.05c0 1.13-.91 2.05-2.04 2.05zm15.15 13.04h-3.51v-5.6c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.69h-3.51V8.97h3.37v1.56h.05c.47-.89 1.62-1.83 3.33-1.83 3.56 0 4.22 2.34 4.22 5.39v6.18z"/></svg></a>
+                <a href="#" class="text-neutral-400 hover:text-brand-gold transition"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+                <a href="#" class="text-neutral-400 hover:text-brand-gold transition"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                <a href="#" class="text-neutral-400 hover:text-brand-gold transition"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const sideMenu = document.getElementById('sideMenu');
+        const menuBackdrop = document.getElementById('menuBackdrop');
+
+        function openSideMenu() {
+            sideMenu.classList.add('open');
+            menuBackdrop.classList.add('visible');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSideMenu() {
+            sideMenu.classList.remove('open');
+            menuBackdrop.classList.remove('visible');
+            document.body.style.overflow = '';
+        }
+
+        menuToggle.addEventListener('click', openSideMenu);
+        closeMenuBtn.addEventListener('click', closeSideMenu);
+        menuBackdrop.addEventListener('click', closeSideMenu);
+
+        const mobileLinks = sideMenu.querySelectorAll('nav a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', closeSideMenu);
+        });
+    </script>
+
+</body>
+</html>
