@@ -328,6 +328,68 @@
             border-radius: 4px;
             transition: width 0.3s ease, background 0.3s ease;
         }
+
+        /* KYC Document Type Cards */
+        .doc-type-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .doc-type-card.selected {
+            border-color: #C9A84C;
+            background: #FDFBF7;
+            box-shadow: 0 4px 12px rgba(201, 168, 76, 0.15);
+        }
+        .doc-type-card .icon-wrapper {
+            transition: all 0.3s ease;
+        }
+        .doc-type-card.selected .icon-wrapper {
+            background: #C9A84C;
+            color: white;
+        }
+
+        /* Upload preview */
+        .upload-preview {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0.75rem;
+            background: #faf9f7;
+            border: 1px solid #E8E2D9;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+        }
+        .upload-preview img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid #E8E2D9;
+        }
+        .upload-preview .file-info {
+            flex: 1;
+            font-size: 0.8rem;
+            color: #1A1A1A;
+        }
+        .upload-preview .file-info .size {
+            color: #8a8a8a;
+            font-size: 0.7rem;
+        }
+        .upload-preview .remove-btn {
+            color: #D94352;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+        .upload-preview .remove-btn:hover {
+            color: #b02a3a;
+        }
+
+        /* Drag and drop highlight */
+        .file-drop-zone.dragover {
+            border-color: #C9A84C;
+            background: #FDFBF7;
+        }
     </style>
 </head>
 <body class="font-sans antialiased bg-white text-slate-800 corporate-pattern flex flex-col min-h-screen">
@@ -620,15 +682,16 @@
             </div>
 
             <!-- ============================================================ -->
-            <!-- STEP 4: Banking Details                                      -->
+            <!-- STEP 4: Banking Details + KYC (Redesigned)                   -->
             <!-- ============================================================ -->
             <div class="step-content" data-step="4">
                 <div class="mb-5">
-                    <h3 class="text-lg font-bold text-brand-dark">Banking Details</h3>
-                    <p class="text-brand-slateText text-xs">Set up your account preferences</p>
+                    <h3 class="text-lg font-bold text-brand-dark">Banking &amp; Identity Verification</h3>
+                    <p class="text-brand-slateText text-xs">Set up your account preferences and verify your identity</p>
                 </div>
 
                 <div class="form-grid">
+                    <!-- Existing banking fields -->
                     <div class="form-field">
                         <label>SSN / SIN (or equivalent) <span class="required">*</span></label>
                         <input type="text" placeholder="XXX-XX-XXXX" required />
@@ -661,22 +724,177 @@
                             <option value="SGD">🇸🇬 Singapore Dollar – SGD</option>
                         </select>
                     </div>
-                    <div class="form-field">
-                        <label>Passport Photograph <span class="required">*</span></label>
-                        <div class="file-input-wrapper">
-                            <div class="file-label">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <span class="file-name">No file chosen</span>
+
+                    <!-- ===== KYC SECTION ===== -->
+                    <div class="mt-4 pt-4 border-t border-brand-border">
+                        <h4 class="text-md font-bold text-brand-dark mb-2">Identity Verification (KYC)</h4>
+                        <p class="text-brand-slateText text-xs mb-3">Which government‑issued identification would you like to use for verification?</p>
+
+                        <!-- Document Type Selection (Cards) -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4" id="docTypeContainer">
+                            <div class="doc-type-card selected border border-brand-border rounded-sm p-3 text-center flex flex-col items-center gap-2" data-doctype="passport">
+                                <div class="icon-wrapper w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-brand-dark">
+                                    <i class="fas fa-passport text-xl"></i>
+                                </div>
+                                <span class="font-bold text-brand-dark text-sm">Passport</span>
                             </div>
-                            <input type="file" accept="image/*" required onchange="updateFileName(this)" />
+                            <div class="doc-type-card border border-brand-border rounded-sm p-3 text-center flex flex-col items-center gap-2" data-doctype="nationalid">
+                                <div class="icon-wrapper w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-brand-dark">
+                                    <i class="fas fa-id-card text-xl"></i>
+                                </div>
+                                <span class="font-bold text-brand-dark text-sm">National ID</span>
+                            </div>
+                            <div class="doc-type-card border border-brand-border rounded-sm p-3 text-center flex flex-col items-center gap-2" data-doctype="driverslicense">
+                                <div class="icon-wrapper w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-brand-dark">
+                                    <i class="fas fa-id-card-clip text-xl"></i>
+                                </div>
+                                <span class="font-bold text-brand-dark text-sm">Driver’s License</span>
+                            </div>
                         </div>
-                        <p class="text-brand-slateText text-[10px] mt-1">Accepted formats: JPG, PNG, PDF. Max size: 5MB</p>
+
+                        <!-- Hidden input to store selected type -->
+                        <input type="hidden" id="selectedDocType" value="passport" />
+
+                        <!-- Dynamic Upload Fields -->
+                        <div id="kycUploadsContainer">
+                            <!-- Passport uploads (default) -->
+                            <div class="kyc-uploads" data-doctype="passport" style="display: block;">
+                                <p class="text-xs text-brand-slateText mb-2">Please upload a clear photo of your passport photo page and the information page.</p>
+                                <div class="form-field">
+                                    <label>Upload Passport Photo <span class="required">*</span></label>
+                                    <div class="file-drop-zone file-input-wrapper" data-upload-id="passport_photo">
+                                        <div class="file-label">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <span class="file-name">No file chosen</span>
+                                        </div>
+                                        <input type="file" accept=".jpg,.jpeg,.png,.pdf" data-maxsize="10" data-upload-id="passport_photo" required />
+                                    </div>
+                                    <p class="text-brand-slateText text-[10px] mt-1">Accepted: JPG, PNG, PDF. Max 10 MB.</p>
+                                    <div class="upload-preview hidden" id="preview-passport_photo">
+                                        <img src="#" alt="Preview" />
+                                        <div class="file-info">
+                                            <span class="name"></span>
+                                            <span class="size"></span>
+                                        </div>
+                                        <span class="remove-btn" data-upload-id="passport_photo">&times;</span>
+                                    </div>
+                                </div>
+                                <div class="form-field">
+                                    <label>Upload Passport Information Page <span class="required">*</span></label>
+                                    <div class="file-drop-zone file-input-wrapper" data-upload-id="passport_info">
+                                        <div class="file-label">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <span class="file-name">No file chosen</span>
+                                        </div>
+                                        <input type="file" accept=".jpg,.jpeg,.png,.pdf" data-maxsize="10" data-upload-id="passport_info" required />
+                                    </div>
+                                    <p class="text-brand-slateText text-[10px] mt-1">Accepted: JPG, PNG, PDF. Max 10 MB.</p>
+                                    <div class="upload-preview hidden" id="preview-passport_info">
+                                        <img src="#" alt="Preview" />
+                                        <div class="file-info">
+                                            <span class="name"></span>
+                                            <span class="size"></span>
+                                        </div>
+                                        <span class="remove-btn" data-upload-id="passport_info">&times;</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- National ID uploads -->
+                            <div class="kyc-uploads" data-doctype="nationalid" style="display: none;">
+                                <p class="text-xs text-brand-slateText mb-2">Please upload a clear photo of the front and back of your national ID card.</p>
+                                <div class="form-field">
+                                    <label>Upload Front of ID <span class="required">*</span></label>
+                                    <div class="file-drop-zone file-input-wrapper" data-upload-id="nationalid_front">
+                                        <div class="file-label">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <span class="file-name">No file chosen</span>
+                                        </div>
+                                        <input type="file" accept=".jpg,.jpeg,.png,.pdf" data-maxsize="10" data-upload-id="nationalid_front" required />
+                                    </div>
+                                    <p class="text-brand-slateText text-[10px] mt-1">Accepted: JPG, PNG, PDF. Max 10 MB.</p>
+                                    <div class="upload-preview hidden" id="preview-nationalid_front">
+                                        <img src="#" alt="Preview" />
+                                        <div class="file-info">
+                                            <span class="name"></span>
+                                            <span class="size"></span>
+                                        </div>
+                                        <span class="remove-btn" data-upload-id="nationalid_front">&times;</span>
+                                    </div>
+                                </div>
+                                <div class="form-field">
+                                    <label>Upload Back of ID <span class="required">*</span></label>
+                                    <div class="file-drop-zone file-input-wrapper" data-upload-id="nationalid_back">
+                                        <div class="file-label">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <span class="file-name">No file chosen</span>
+                                        </div>
+                                        <input type="file" accept=".jpg,.jpeg,.png,.pdf" data-maxsize="10" data-upload-id="nationalid_back" required />
+                                    </div>
+                                    <p class="text-brand-slateText text-[10px] mt-1">Accepted: JPG, PNG, PDF. Max 10 MB.</p>
+                                    <div class="upload-preview hidden" id="preview-nationalid_back">
+                                        <img src="#" alt="Preview" />
+                                        <div class="file-info">
+                                            <span class="name"></span>
+                                            <span class="size"></span>
+                                        </div>
+                                        <span class="remove-btn" data-upload-id="nationalid_back">&times;</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Driver's License uploads -->
+                            <div class="kyc-uploads" data-doctype="driverslicense" style="display: none;">
+                                <p class="text-xs text-brand-slateText mb-2">Please upload a clear photo of the front and back of your driver’s license.</p>
+                                <div class="form-field">
+                                    <label>Upload Front of License <span class="required">*</span></label>
+                                    <div class="file-drop-zone file-input-wrapper" data-upload-id="license_front">
+                                        <div class="file-label">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <span class="file-name">No file chosen</span>
+                                        </div>
+                                        <input type="file" accept=".jpg,.jpeg,.png,.pdf" data-maxsize="10" data-upload-id="license_front" required />
+                                    </div>
+                                    <p class="text-brand-slateText text-[10px] mt-1">Accepted: JPG, PNG, PDF. Max 10 MB.</p>
+                                    <div class="upload-preview hidden" id="preview-license_front">
+                                        <img src="#" alt="Preview" />
+                                        <div class="file-info">
+                                            <span class="name"></span>
+                                            <span class="size"></span>
+                                        </div>
+                                        <span class="remove-btn" data-upload-id="license_front">&times;</span>
+                                    </div>
+                                </div>
+                                <div class="form-field">
+                                    <label>Upload Back of License <span class="required">*</span></label>
+                                    <div class="file-drop-zone file-input-wrapper" data-upload-id="license_back">
+                                        <div class="file-label">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <span class="file-name">No file chosen</span>
+                                        </div>
+                                        <input type="file" accept=".jpg,.jpeg,.png,.pdf" data-maxsize="10" data-upload-id="license_back" required />
+                                    </div>
+                                    <p class="text-brand-slateText text-[10px] mt-1">Accepted: JPG, PNG, PDF. Max 10 MB.</p>
+                                    <div class="upload-preview hidden" id="preview-license_back">
+                                        <img src="#" alt="Preview" />
+                                        <div class="file-info">
+                                            <span class="name"></span>
+                                            <span class="size"></span>
+                                        </div>
+                                        <span class="remove-btn" data-upload-id="license_back">&times;</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Validation message -->
+                        <div id="kycValidationMsg" class="text-xs text-red-500 mt-2 hidden">Please complete all required uploads for the selected document type.</div>
                     </div>
                 </div>
 
                 <div class="flex justify-between items-center mt-4 pt-4 border-t border-brand-border">
                     <button onclick="goToStep(3)" class="border border-brand-border hover:bg-slate-50 text-brand-dark font-bold px-6 py-2.5 rounded-sm text-xs uppercase tracking-wider transition">Previous</button>
-                    <button onclick="goToStep(5)" class="bg-brand-dark hover:bg-neutral-900 text-white font-bold px-8 py-2.5 rounded-sm text-xs uppercase tracking-wider transition">Next</button>
+                    <button onclick="validateAndGoToStep5()" class="bg-brand-dark hover:bg-neutral-900 text-white font-bold px-8 py-2.5 rounded-sm text-xs uppercase tracking-wider transition">Next</button>
                 </div>
             </div>
 
@@ -797,10 +1015,10 @@
 
     <!-- ===== JAVASCRIPT ===== -->
     <script>
+        // ----- STEP NAVIGATION -----
         let currentStep = 1;
         const totalSteps = 5;
 
-        // Step Navigation
         function goToStep(step) {
             if (step < 1 || step > totalSteps) return;
             currentStep = step;
@@ -842,7 +1060,162 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // PIN Input
+        // ----- KYC: Document Type Selection -----
+        const docTypeCards = document.querySelectorAll('.doc-type-card');
+        const kycUploads = document.querySelectorAll('.kyc-uploads');
+        const selectedDocTypeInput = document.getElementById('selectedDocType');
+
+        docTypeCards.forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove selected from all
+                docTypeCards.forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+
+                const docType = this.dataset.doctype;
+                selectedDocTypeInput.value = docType;
+
+                // Show the correct uploads
+                kycUploads.forEach(upload => {
+                    upload.style.display = upload.dataset.doctype === docType ? 'block' : 'none';
+                });
+
+                // Reset validation message
+                document.getElementById('kycValidationMsg').classList.add('hidden');
+            });
+        });
+
+        // ----- FILE UPLOAD HANDLING (drag & drop, preview, removal) -----
+        document.querySelectorAll('.file-input-wrapper').forEach(wrapper => {
+            const input = wrapper.querySelector('input[type="file"]');
+            const label = wrapper.querySelector('.file-label .file-name');
+            const previewContainer = wrapper.parentElement.querySelector('.upload-preview');
+            const previewImg = previewContainer ? previewContainer.querySelector('img') : null;
+            const previewName = previewContainer ? previewContainer.querySelector('.file-info .name') : null;
+            const previewSize = previewContainer ? previewContainer.querySelector('.file-info .size') : null;
+            const removeBtn = previewContainer ? previewContainer.querySelector('.remove-btn') : null;
+            const dropZone = wrapper;
+
+            // Click on dropZone triggers file input (already done via label)
+
+            // Drag and drop
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('dragover');
+            });
+            dropZone.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+            });
+            dropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+                if (e.dataTransfer.files.length) {
+                    input.files = e.dataTransfer.files;
+                    handleFileUpload(input, label, previewContainer, previewImg, previewName, previewSize, removeBtn);
+                }
+            });
+
+            // Change event
+            input.addEventListener('change', function() {
+                handleFileUpload(this, label, previewContainer, previewImg, previewName, previewSize, removeBtn);
+            });
+
+            // Remove button
+            if (removeBtn) {
+                removeBtn.addEventListener('click', function() {
+                    const uploadId = this.dataset.uploadId;
+                    const inputField = document.querySelector(`input[data-upload-id="${uploadId}"]`);
+                    if (inputField) {
+                        inputField.value = '';
+                        const labelField = inputField.closest('.file-input-wrapper').querySelector('.file-label .file-name');
+                        if (labelField) labelField.textContent = 'No file chosen';
+                        const preview = document.getElementById(`preview-${uploadId}`);
+                        if (preview) preview.classList.add('hidden');
+                        // Re-validate KYC
+                        validateKycUploads();
+                    }
+                });
+            }
+        });
+
+        function handleFileUpload(input, label, previewContainer, previewImg, previewName, previewSize, removeBtn) {
+            const file = input.files[0];
+            if (!file) return;
+
+            // Validate file size (10 MB)
+            const maxSize = parseInt(input.dataset.maxsize) || 10;
+            if (file.size > maxSize * 1024 * 1024) {
+                alert(`File size exceeds ${maxSize} MB limit.`);
+                input.value = '';
+                label.textContent = 'No file chosen';
+                if (previewContainer) previewContainer.classList.add('hidden');
+                return;
+            }
+
+            // Update label
+            label.textContent = file.name;
+
+            // Show preview
+            if (previewContainer) {
+                previewContainer.classList.remove('hidden');
+                if (previewImg) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewImg.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+                if (previewName) previewName.textContent = file.name;
+                if (previewSize) previewSize.textContent = (file.size / 1024 / 1024).toFixed(2) + ' MB';
+                // Show remove button
+                if (removeBtn) removeBtn.style.display = 'inline';
+            }
+
+            // Validate KYC after upload
+            validateKycUploads();
+        }
+
+        // ----- KYC Validation -----
+        function validateKycUploads() {
+            const docType = selectedDocTypeInput.value;
+            let allUploaded = true;
+
+            // Find the currently visible uploads for this doc type
+            const visibleUploads = document.querySelector(`.kyc-uploads[data-doctype="${docType}"]`);
+            if (!visibleUploads) return;
+
+            const fileInputs = visibleUploads.querySelectorAll('input[type="file"]');
+            fileInputs.forEach(input => {
+                if (!input.files || input.files.length === 0) {
+                    allUploaded = false;
+                }
+            });
+
+            const msg = document.getElementById('kycValidationMsg');
+            if (!allUploaded) {
+                msg.classList.remove('hidden');
+            } else {
+                msg.classList.add('hidden');
+            }
+
+            // Return state for validation on next step
+            return allUploaded;
+        }
+
+        // ----- Validate before going to Step 5 -----
+        function validateAndGoToStep5() {
+            const isValid = validateKycUploads();
+            if (!isValid) {
+                document.getElementById('kycValidationMsg').classList.remove('hidden');
+                // Scroll to the validation message
+                document.getElementById('kycValidationMsg').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+            // All uploads done, proceed
+            goToStep(5);
+        }
+
+        // ----- PIN Input -----
         document.querySelectorAll('.pin-digit').forEach((input, index, arr) => {
             input.addEventListener('input', function() {
                 this.value = this.value.replace(/\D/g, '');
@@ -857,17 +1230,7 @@
             });
         });
 
-        // File input
-        function updateFileName(input) {
-            const label = input.closest('.file-input-wrapper').querySelector('.file-name');
-            if (input.files && input.files.length > 0) {
-                label.textContent = input.files[0].name;
-            } else {
-                label.textContent = 'No file chosen';
-            }
-        }
-
-        // Password strength
+        // ----- Password Strength -----
         function checkPasswordStrength(password) {
             const fill = document.getElementById('strengthFill');
             let score = 0;
@@ -890,7 +1253,7 @@
             }
         }
 
-        // Form Submit
+        // ----- Form Submit -----
         function submitForm() {
             const terms = document.getElementById('termsCheck');
             if (!terms.checked) {
@@ -901,9 +1264,16 @@
             window.location.href = 'dashboard.html';
         }
 
-        // Initialize
+        // ----- Initialize -----
         document.addEventListener('DOMContentLoaded', function() {
             goToStep(1);
+            // Set default document type (Passport)
+            document.querySelector('.doc-type-card[data-doctype="passport"]').classList.add('selected');
+            selectedDocTypeInput.value = 'passport';
+            // Show passport uploads, hide others
+            kycUploads.forEach(upload => {
+                upload.style.display = upload.dataset.doctype === 'passport' ? 'block' : 'none';
+            });
         });
     </script>
 
