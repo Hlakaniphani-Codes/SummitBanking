@@ -682,7 +682,7 @@
             </div>
 
             <!-- ============================================================ -->
-            <!-- STEP 4: Banking Details + KYC (Redesigned)                   -->
+            <!-- STEP 4: Banking Details + KYC (Updated: State ID instead of National ID) -->
             <!-- ============================================================ -->
             <div class="step-content" data-step="4">
                 <div class="mb-5">
@@ -738,11 +738,12 @@
                                 </div>
                                 <span class="font-bold text-brand-dark text-sm">Passport</span>
                             </div>
-                            <div class="doc-type-card border border-brand-border rounded-sm p-3 text-center flex flex-col items-center gap-2" data-doctype="nationalid">
+                            <!-- Changed from National ID to State ID -->
+                            <div class="doc-type-card border border-brand-border rounded-sm p-3 text-center flex flex-col items-center gap-2" data-doctype="stateid">
                                 <div class="icon-wrapper w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-brand-dark">
                                     <i class="fas fa-id-card text-xl"></i>
                                 </div>
-                                <span class="font-bold text-brand-dark text-sm">National ID</span>
+                                <span class="font-bold text-brand-dark text-sm">State ID</span>
                             </div>
                             <div class="doc-type-card border border-brand-border rounded-sm p-3 text-center flex flex-col items-center gap-2" data-doctype="driverslicense">
                                 <div class="icon-wrapper w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-brand-dark">
@@ -800,45 +801,45 @@
                                 </div>
                             </div>
 
-                            <!-- National ID uploads -->
-                            <div class="kyc-uploads" data-doctype="nationalid" style="display: none;">
-                                <p class="text-xs text-brand-slateText mb-2">Please upload a clear photo of the front and back of your national ID card.</p>
+                            <!-- State ID uploads (formerly National ID) -->
+                            <div class="kyc-uploads" data-doctype="stateid" style="display: none;">
+                                <p class="text-xs text-brand-slateText mb-2">Please upload a clear photo of the front and back of your State ID card.</p>
                                 <div class="form-field">
                                     <label>Upload Front of ID <span class="required">*</span></label>
-                                    <div class="file-drop-zone file-input-wrapper" data-upload-id="nationalid_front">
+                                    <div class="file-drop-zone file-input-wrapper" data-upload-id="stateid_front">
                                         <div class="file-label">
                                             <i class="fas fa-cloud-upload-alt"></i>
                                             <span class="file-name">No file chosen</span>
                                         </div>
-                                        <input type="file" accept=".jpg,.jpeg,.png,.pdf" data-maxsize="10" data-upload-id="nationalid_front" required />
+                                        <input type="file" accept=".jpg,.jpeg,.png,.pdf" data-maxsize="10" data-upload-id="stateid_front" required />
                                     </div>
                                     <p class="text-brand-slateText text-[10px] mt-1">Accepted: JPG, PNG, PDF. Max 10 MB.</p>
-                                    <div class="upload-preview hidden" id="preview-nationalid_front">
+                                    <div class="upload-preview hidden" id="preview-stateid_front">
                                         <img src="#" alt="Preview" />
                                         <div class="file-info">
                                             <span class="name"></span>
                                             <span class="size"></span>
                                         </div>
-                                        <span class="remove-btn" data-upload-id="nationalid_front">&times;</span>
+                                        <span class="remove-btn" data-upload-id="stateid_front">&times;</span>
                                     </div>
                                 </div>
                                 <div class="form-field">
                                     <label>Upload Back of ID <span class="required">*</span></label>
-                                    <div class="file-drop-zone file-input-wrapper" data-upload-id="nationalid_back">
+                                    <div class="file-drop-zone file-input-wrapper" data-upload-id="stateid_back">
                                         <div class="file-label">
                                             <i class="fas fa-cloud-upload-alt"></i>
                                             <span class="file-name">No file chosen</span>
                                         </div>
-                                        <input type="file" accept=".jpg,.jpeg,.png,.pdf" data-maxsize="10" data-upload-id="nationalid_back" required />
+                                        <input type="file" accept=".jpg,.jpeg,.png,.pdf" data-maxsize="10" data-upload-id="stateid_back" required />
                                     </div>
                                     <p class="text-brand-slateText text-[10px] mt-1">Accepted: JPG, PNG, PDF. Max 10 MB.</p>
-                                    <div class="upload-preview hidden" id="preview-nationalid_back">
+                                    <div class="upload-preview hidden" id="preview-stateid_back">
                                         <img src="#" alt="Preview" />
                                         <div class="file-info">
                                             <span class="name"></span>
                                             <span class="size"></span>
                                         </div>
-                                        <span class="remove-btn" data-upload-id="nationalid_back">&times;</span>
+                                        <span class="remove-btn" data-upload-id="stateid_back">&times;</span>
                                     </div>
                                 </div>
                             </div>
