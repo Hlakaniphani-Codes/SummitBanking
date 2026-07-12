@@ -1,3 +1,36 @@
-# TODO
+# TODO.md — Summit Bank Digital Banking Dashboard
 
-- [ ] Update `index.html` to enable Google Translate language switching (dropdown) that translates the whole page.
+- [ ] Refactor `dashboard.html` into a single-file SPA with hidden/shown page sections for:
+  - [ ] Dashboard (existing landing)
+  - [ ] Fund Transfer
+  - [ ] Credit/Debit Cards
+  - [ ] Transactions
+  - [ ] Pay Bills
+  - [ ] Notifications
+  - [ ] Security
+  - [ ] Support
+  - [ ] Profile modal/page
+- [ ] Implement shared routing (no reload) for all sidebar links:
+  - [ ] Active sidebar highlight
+  - [ ] Hash-based routing (`#dashboard`, `#fund-transfer`, etc.)
+- [ ] Add/extend shared interactivity utilities in `dashboard.html`:
+  - [ ] Toast notifications (success/error)
+  - [ ] Modal framework (ESC + overlay click)
+  - [ ] Clipboard copy helper with toast
+  - [ ] CSV export download (data URI)
+- [ ] Implement each page with realistic sample data stored in JS objects/arrays:
+  - [ ] Fund Transfer: validation + confirm/cancel + transfer history table
+  - [ ] Cards: list + block/unblock + request new card + per-card transactions
+  - [ ] Transactions: advanced filtering (date range/type/amount), sorting, pagination, detailed modal
+  - [ ] Pay Bills: add payee modal, bill payment form, payment history
+  - [ ] Notifications: bell dropdown (unread count=5, recent 3), notifications page w/ read/delete
+  - [ ] Security: change password, 2FA toggle, device management, login history, security questions
+  - [ ] Support: FAQ accordion, contact form, live chat placeholder, knowledge base links
+  - [ ] Sign Out: confirmation modal + redirect to login placeholder
+- [ ] Make UI responsive:
+  - [ ] Collapsible sidebar on mobile
+  - [ ] Page layouts stack correctly
+- [ ] Validate end-to-end:
+  - [ ] All sidebar navigation shows correct content
+  - [ ] Tables paginate/search/filter and exports download
+  - [ ] Modals and dropdowns work consistently
