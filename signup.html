@@ -1,39 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Summit Bank – Open Account</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="https://img.icons8.com/fluency/32/shield.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://img.icons8.com/fluency/16/shield.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://img.icons8.com/fluency/180/shield.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://img.icons8.com/fluency/32/shield.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="https://img.icons8.com/fluency/16/shield.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://img.icons8.com/fluency/180/shield.png" />
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         brand: {
-                            dark: '#111111',
+                            dark: '#0B0B0B',
                             charcoal: '#1A1A1A',
-                            gold: '#7D6046',
-                            goldLight: '#907359',
-                            goldDim: '#684B31',
-                            slateText: '#555555',
-                            border: '#E5E5E5'
+                            gold: '#C9A84C',
+                            goldLight: '#D9C06E',
+                            goldDim: '#A8893A',
+                            goldPale: '#F5EDD6',
+                            slateText: '#5A5A5A',
+                            border: '#E8E2D9'
                         }
                     },
                     fontFamily: {
-                        sans: ['Montserrat', 'system-ui', 'sans-serif']
+                        sans: ['Inter', 'Montserrat', 'system-ui', 'sans-serif'],
+                        display: ['Montserrat', 'system-ui', 'sans-serif']
                     }
                 }
             }
@@ -42,10 +45,11 @@
 
     <style>
         .enroll-hero-bg {
-            background-image: linear-gradient(rgba(17, 17, 17, 0.85), rgba(17, 17, 17, 0.90)), url('fill.jpg');
+            background-image: linear-gradient(rgba(11, 11, 11, 0.85), rgba(11, 11, 11, 0.92)), url('fill.jpg');
             background-size: cover;
             background-position: center;
         }
+
         .step-indicator .step-dot {
             transition: all 0.3s ease;
         }
@@ -60,44 +64,54 @@
             display: block;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
         .account-option {
             transition: all 0.3s ease;
             cursor: pointer;
         }
         .account-option.selected {
-            border-color: #7D6046;
+            border-color: #C9A84C;
             background: #FDFBF7;
         }
         .account-option .radio-dot {
             transition: all 0.3s ease;
         }
         .account-option.selected .radio-dot {
-            border-color: #7D6046;
+            border-color: #C9A84C;
         }
         .account-option.selected .radio-dot::after {
             content: '';
             width: 10px;
             height: 10px;
-            background: #7D6046;
+            background: #C9A84C;
             border-radius: 50%;
             display: block;
         }
+
         .pin-digit {
             transition: all 0.3s ease;
         }
         .pin-digit:focus {
-            border-color: #7D6046;
-            box-shadow: 0 0 0 3px rgba(125, 96, 70, 0.15);
+            border-color: #C9A84C;
+            box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.15);
         }
+
         .account-types-grid .account-option.hidden-option {
             display: none;
         }
         .account-types-grid .account-option {
             display: flex;
         }
+
         .flag-icon {
             width: 20px;
             height: 14px;
@@ -106,39 +120,104 @@
             vertical-align: middle;
             background-size: cover;
             background-position: center;
-            border: 1px solid rgba(0,0,0,0.06);
+            border: 1px solid rgba(0, 0, 0, 0.06);
         }
-        .flag-icon-us { background-image: url('https://flagcdn.com/w20/us.png'); }
-        .flag-icon-gb { background-image: url('https://flagcdn.com/w20/gb.png'); }
-        .flag-icon-ca { background-image: url('https://flagcdn.com/w20/ca.png'); }
-        .flag-icon-au { background-image: url('https://flagcdn.com/w20/au.png'); }
-        .flag-icon-za { background-image: url('https://flagcdn.com/w20/za.png'); }
-        .flag-icon-ng { background-image: url('https://flagcdn.com/w20/ng.png'); }
-        .flag-icon-ke { background-image: url('https://flagcdn.com/w20/ke.png'); }
-        .flag-icon-in { background-image: url('https://flagcdn.com/w20/in.png'); }
-        .flag-icon-de { background-image: url('https://flagcdn.com/w20/de.png'); }
-        .flag-icon-fr { background-image: url('https://flagcdn.com/w20/fr.png'); }
-        .flag-icon-ae { background-image: url('https://flagcdn.com/w20/ae.png'); }
-        .flag-icon-sg { background-image: url('https://flagcdn.com/w20/sg.png'); }
+        .flag-icon-us {
+            background-image: url('https://flagcdn.com/w20/us.png');
+        }
+        .flag-icon-gb {
+            background-image: url('https://flagcdn.com/w20/gb.png');
+        }
+        .flag-icon-ca {
+            background-image: url('https://flagcdn.com/w20/ca.png');
+        }
+        .flag-icon-au {
+            background-image: url('https://flagcdn.com/w20/au.png');
+        }
+        .flag-icon-za {
+            background-image: url('https://flagcdn.com/w20/za.png');
+        }
+        .flag-icon-ng {
+            background-image: url('https://flagcdn.com/w20/ng.png');
+        }
+        .flag-icon-ke {
+            background-image: url('https://flagcdn.com/w20/ke.png');
+        }
+        .flag-icon-in {
+            background-image: url('https://flagcdn.com/w20/in.png');
+        }
+        .flag-icon-de {
+            background-image: url('https://flagcdn.com/w20/de.png');
+        }
+        .flag-icon-fr {
+            background-image: url('https://flagcdn.com/w20/fr.png');
+        }
+        .flag-icon-ae {
+            background-image: url('https://flagcdn.com/w20/ae.png');
+        }
+        .flag-icon-sg {
+            background-image: url('https://flagcdn.com/w20/sg.png');
+        }
+
+        .no-bullets {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        /* Corporate pattern overlay */
+        .corporate-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A84C' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* Gold gradient text */
+        .gold-gradient {
+            background: linear-gradient(135deg, #C9A84C 0%, #D9C06E 50%, #A8893A 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Logo SVG */
+        .logo-svg {
+            height: 40px;
+            width: auto;
+        }
+
+        .trust-badge {
+            transition: all 0.3s ease;
+        }
+        .trust-badge:hover {
+            transform: translateY(-2px);
+        }
     </style>
 </head>
-<body class="font-sans antialiased bg-white text-slate-800 flex flex-col min-h-screen">
+<body class="font-sans antialiased bg-white text-slate-800 corporate-pattern flex flex-col min-h-screen">
 
     <!-- ===== TOP ACCENT BRAND BAR ===== -->
     <div class="bg-brand-gold h-[5px] w-full"></div>
 
     <!-- ===== SECONDARY INFORMATION STRIP ===== -->
     <div class="bg-white border-b border-brand-border text-brand-dark py-2 text-[10px] tracking-widest text-center uppercase font-semibold">
-        Summit Bank &bull; Global Digital Corporate & Retail Banking
+        Summit Bank &bull; Global Digital Corporate &amp; Retail Banking
     </div>
 
     <!-- ===== HEADER ===== -->
-    <header class="bg-white border-b border-brand-border shadow-sm sticky top-0 z-50">
+    <header class="bg-white/95 backdrop-blur-sm border-b border-brand-border shadow-sm sticky top-0 z-50">
         <div class="container mx-auto px-4 lg:px-8 py-4 flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-3">
-                <div class="w-9 h-9 bg-brand-dark flex items-center justify-center text-white text-xs font-black tracking-tighter rounded-sm">SB</div>
-                <span class="text-lg font-bold tracking-tight text-brand-dark">Summit <span class="text-brand-gold font-medium">Bank</span></span>
+            <!-- Custom SVG Logo -->
+            <a href="index.html" class="flex items-center gap-3 shrink-0">
+                <svg class="logo-svg" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 30 L30 10 L50 30 L40 30 L30 18 L20 30 L10 30Z" fill="#C9A84C" />
+                    <path d="M70 30 L90 10 L110 30 L100 30 L90 18 L80 30 L70 30Z" fill="#C9A84C" />
+                    <rect x="32" y="24" width="2" height="6" fill="#C9A84C" />
+                    <rect x="34" y="26" width="2" height="4" fill="#C9A84C" />
+                    <rect x="36" y="28" width="2" height="2" fill="#C9A84C" />
+                    <text x="46" y="26" font-family="Montserrat, sans-serif" font-weight="800" font-size="20" fill="#0B0B0B" letter-spacing="2">SUMMIT</text>
+                    <text x="46" y="36" font-family="Inter, sans-serif" font-weight="500" font-size="8" fill="#5A5A5A" letter-spacing="3">BANK</text>
+                    <circle cx="120" cy="20" r="4" fill="#C9A84C" opacity="0.3" />
+                </svg>
             </a>
+
             <div class="flex items-center gap-6 text-xs font-bold uppercase tracking-wider text-brand-slateText">
                 <a href="index.html#support" class="hover:text-brand-gold transition">Contact us</a>
                 <a href="login.html" class="hover:text-brand-gold transition">Sign in</a>
@@ -148,7 +227,7 @@
 
     <!-- ===== MAIN CONTENT ===== -->
     <main class="flex-1 grid lg:grid-cols-12">
-        
+
         <!-- LEFT PANEL -->
         <section class="hidden lg:flex lg:col-span-5 enroll-hero-bg p-12 flex-col justify-between text-white relative">
             <div>
@@ -211,7 +290,7 @@
 
         <!-- RIGHT PANEL - FORM -->
         <section class="col-span-12 lg:col-span-7 bg-white p-6 sm:p-8 lg:p-12 flex flex-col justify-center max-w-3xl mx-auto w-full">
-            
+
             <!-- Header -->
             <div class="mb-6">
                 <h1 class="text-2xl font-extrabold text-brand-dark tracking-tight sm:text-3xl">Create Your Account</h1>
@@ -251,21 +330,21 @@
                 <div class="grid grid-cols-3 gap-4">
                     <div>
                         <label class="block text-brand-dark font-bold uppercase tracking-wider text-[10px] mb-1">Legal First Name <span class="text-red-500">*</span></label>
-                        <input type="text" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="First name">
+                        <input type="text" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="First name" />
                     </div>
                     <div>
                         <label class="block text-brand-dark font-bold uppercase tracking-wider text-[10px] mb-1">Middle Name</label>
-                        <input type="text" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="Middle name">
+                        <input type="text" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="Middle name" />
                     </div>
                     <div>
                         <label class="block text-brand-dark font-bold uppercase tracking-wider text-[10px] mb-1">Legal Last Name <span class="text-red-500">*</span></label>
-                        <input type="text" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="Last name">
+                        <input type="text" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="Last name" />
                     </div>
                 </div>
 
                 <div class="mt-4">
                     <label class="block text-brand-dark font-bold uppercase tracking-wider text-[10px] mb-1">Username <span class="text-red-500">*</span></label>
-                    <input type="text" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="Create username">
+                    <input type="text" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="Create username" />
                 </div>
 
                 <div class="flex justify-between items-center mt-6 pt-4 border-t border-brand-border">
@@ -283,12 +362,12 @@
 
                 <div>
                     <label class="block text-brand-dark font-bold uppercase tracking-wider text-[10px] mb-1">Email Address <span class="text-red-500">*</span></label>
-                    <input type="email" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="email@example.com">
+                    <input type="email" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="email@example.com" />
                 </div>
 
                 <div class="mt-4">
                     <label class="block text-brand-dark font-bold uppercase tracking-wider text-[10px] mb-1">Phone Number <span class="text-red-500">*</span></label>
-                    <input type="tel" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="+1 (234) 567-8901">
+                    <input type="tel" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="+1 (234) 567-8901" />
                 </div>
 
                 <div class="mt-4">
@@ -377,10 +456,10 @@
                 <div class="mt-4">
                     <label class="block text-brand-dark font-bold uppercase tracking-wider text-[10px] mb-1">Transaction PIN (4 digits) <span class="text-red-500">*</span></label>
                     <div class="flex gap-2">
-                        <input type="password" maxlength="1" class="pin-digit w-12 h-12 text-center text-lg font-bold border-2 border-brand-border rounded-sm bg-slate-50 focus:outline-none focus:border-brand-gold transition">
-                        <input type="password" maxlength="1" class="pin-digit w-12 h-12 text-center text-lg font-bold border-2 border-brand-border rounded-sm bg-slate-50 focus:outline-none focus:border-brand-gold transition">
-                        <input type="password" maxlength="1" class="pin-digit w-12 h-12 text-center text-lg font-bold border-2 border-brand-border rounded-sm bg-slate-50 focus:outline-none focus:border-brand-gold transition">
-                        <input type="password" maxlength="1" class="pin-digit w-12 h-12 text-center text-lg font-bold border-2 border-brand-border rounded-sm bg-slate-50 focus:outline-none focus:border-brand-gold transition">
+                        <input type="password" maxlength="1" class="pin-digit w-12 h-12 text-center text-lg font-bold border-2 border-brand-border rounded-sm bg-slate-50 focus:outline-none focus:border-brand-gold transition" />
+                        <input type="password" maxlength="1" class="pin-digit w-12 h-12 text-center text-lg font-bold border-2 border-brand-border rounded-sm bg-slate-50 focus:outline-none focus:border-brand-gold transition" />
+                        <input type="password" maxlength="1" class="pin-digit w-12 h-12 text-center text-lg font-bold border-2 border-brand-border rounded-sm bg-slate-50 focus:outline-none focus:border-brand-gold transition" />
+                        <input type="password" maxlength="1" class="pin-digit w-12 h-12 text-center text-lg font-bold border-2 border-brand-border rounded-sm bg-slate-50 focus:outline-none focus:border-brand-gold transition" />
                     </div>
                     <p class="text-brand-slateText text-[10px] mt-1">Your PIN will be required to authorize transactions</p>
                 </div>
@@ -400,12 +479,12 @@
 
                 <div>
                     <label class="block text-brand-dark font-bold uppercase tracking-wider text-[10px] mb-1">Password <span class="text-red-500">*</span></label>
-                    <input type="password" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="Create a strong password">
+                    <input type="password" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="Create a strong password" />
                 </div>
 
                 <div class="mt-4">
                     <label class="block text-brand-dark font-bold uppercase tracking-wider text-[10px] mb-1">Confirm Password <span class="text-red-500">*</span></label>
-                    <input type="password" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="Confirm your password">
+                    <input type="password" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="Confirm your password" />
                 </div>
 
                 <div class="mt-3 flex flex-wrap gap-2">
@@ -424,7 +503,7 @@
                 </div>
 
                 <div class="mt-4 flex items-start gap-2">
-                    <input type="checkbox" id="termsCheck" class="mt-1 w-4 h-4 text-brand-dark border-brand-border rounded-sm focus:ring-brand-gold cursor-pointer">
+                    <input type="checkbox" id="termsCheck" class="mt-1 w-4 h-4 text-brand-dark border-brand-border rounded-sm focus:ring-brand-gold cursor-pointer" />
                     <label for="termsCheck" class="text-xs text-brand-slateText cursor-pointer">I agree to the <a href="#" class="text-brand-gold font-semibold hover:underline">Terms of Service</a> and <a href="#" class="text-brand-gold font-semibold hover:underline">Privacy Policy</a></label>
                 </div>
 
@@ -444,16 +523,42 @@
         </section>
     </main>
 
-    <!-- ===== FOOTER ===== -->
-    <footer class="bg-brand-dark border-t border-neutral-800 text-neutral-400 py-6 text-xs">
-        <div class="container mx-auto px-4 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div class="flex flex-wrap justify-center gap-6 font-semibold">
-                <a href="#" class="hover:text-white transition">Privacy</a>
-                <a href="#" class="hover:text-white transition">Security</a>
-                <a href="#" class="hover:text-white transition">Accessibility</a>
-                <a href="#" class="hover:text-white transition">Terms of use</a>
+    <!-- ===== TRUST BADGES ===== -->
+    <section class="py-6 bg-white border-t border-brand-border">
+        <div class="container mx-auto px-4 lg:px-8">
+            <div class="flex flex-wrap justify-center items-center gap-6 md:gap-10 text-xs font-semibold uppercase tracking-wider text-brand-slateText">
+                <span class="flex items-center gap-2 trust-badge">
+                    <svg class="w-4 h-4 text-brand-gold" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    FDIC Insured
+                </span>
+                <span class="flex items-center gap-2 trust-badge">
+                    <svg class="w-4 h-4 text-brand-gold" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                    256-bit Encryption
+                </span>
+                <span class="flex items-center gap-2 trust-badge">
+                    <svg class="w-4 h-4 text-brand-gold" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+                    Global 24/7 Support
+                </span>
+                <span class="flex items-center gap-2 trust-badge">
+                    <svg class="w-4 h-4 text-brand-gold" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                    Regulated & Compliant
+                </span>
             </div>
-            <div class="text-neutral-500 font-medium">&copy; 2026 Summit Bank. All rights reserved.</div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-brand-dark border-t border-neutral-800 text-neutral-400 py-8 text-xs">
+        <div class="container mx-auto px-4 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex flex-wrap justify-center gap-6 font-semibold">
+                    <a href="#" class="hover:text-white transition">Privacy</a>
+                    <a href="#" class="hover:text-white transition">Security</a>
+                    <a href="#" class="hover:text-white transition">Accessibility</a>
+                    <a href="#" class="hover:text-white transition">Terms of use</a>
+                </div>
+                <div class="text-neutral-500 font-medium">&copy; 2026 Summit Bank. All rights reserved.</div>
+            </div>
         </div>
     </footer>
 
@@ -477,11 +582,15 @@
                 const circle = dot.querySelector('.circle');
                 const label = dot.querySelector('span:last-child');
                 if (num <= step) {
-                    circle.className = 'circle w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 border-brand-dark bg-brand-dark text-white';
-                    if (label) label.className = 'text-[8px] font-bold uppercase tracking-wider ml-1 text-brand-dark hidden sm:inline';
+                    circle.className =
+                        'circle w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 border-brand-dark bg-brand-dark text-white';
+                    if (label) label.className =
+                        'text-[8px] font-bold uppercase tracking-wider ml-1 text-brand-dark hidden sm:inline';
                 } else {
-                    circle.className = 'circle w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 border-brand-border bg-white text-brand-slateText';
-                    if (label) label.className = 'text-[8px] font-bold uppercase tracking-wider ml-1 text-brand-slateText hidden sm:inline';
+                    circle.className =
+                        'circle w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 border-brand-border bg-white text-brand-slateText';
+                    if (label) label.className =
+                        'text-[8px] font-bold uppercase tracking-wider ml-1 text-brand-slateText hidden sm:inline';
                 }
             });
 
@@ -565,7 +674,7 @@
     </script>
 
     <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
 </body>
 </html>
