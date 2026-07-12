@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Summit Bank – Open Account</title>
+    <title>SummitFin – Open Account</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="https://img.icons8.com/fluency/32/shield.png" />
@@ -44,6 +44,10 @@
     </script>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         .enroll-hero-bg {
             background-image: linear-gradient(rgba(11, 11, 11, 0.85), rgba(11, 11, 11, 0.92)), url('fill.jpg');
             background-size: cover;
@@ -164,12 +168,10 @@
             padding-left: 0;
         }
 
-        /* Corporate pattern overlay */
         .corporate-pattern {
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A84C' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
 
-        /* Gold gradient text */
         .gold-gradient {
             background: linear-gradient(135deg, #C9A84C 0%, #D9C06E 50%, #A8893A 100%);
             -webkit-background-clip: text;
@@ -177,7 +179,6 @@
             background-clip: text;
         }
 
-        /* Logo SVG */
         .logo-svg {
             height: 40px;
             width: auto;
@@ -189,6 +190,144 @@
         .trust-badge:hover {
             transform: translateY(-2px);
         }
+
+        /* ===== MOBILE-FIRST: ALL INPUTS STACK VERTICALLY ===== */
+        .form-field {
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        .form-field label {
+            display: block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #0B0B0B;
+            margin-bottom: 0.25rem;
+        }
+        .form-field label .required {
+            color: #D94352;
+        }
+        .form-field input,
+        .form-field select {
+            width: 100%;
+            padding: 0.6rem 0.75rem;
+            border: 1px solid #E8E2D9;
+            border-radius: 4px;
+            background: #faf9f7;
+            font-size: 0.9rem;
+            font-family: 'Inter', system-ui, sans-serif;
+            color: #1A1A1A;
+            transition: border 0.2s, box-shadow 0.2s;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .form-field input:focus,
+        .form-field select:focus {
+            border-color: #C9A84C;
+            box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.12);
+        }
+        .form-field input::placeholder {
+            color: #b0b0b0;
+            font-size: 0.8rem;
+        }
+
+        /* Remove side-by-side grid on mobile — always vertical */
+        .form-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        /* But responsive: on desktop we keep vertical too (user requested no side-by-side) */
+        @media (min-width: 640px) {
+            .form-grid {
+                flex-direction: column;
+            }
+        }
+
+        /* File input styling */
+        .file-input-wrapper {
+            position: relative;
+            width: 100%;
+        }
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        .file-input-wrapper .file-label {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0.75rem;
+            border: 1px dashed #E8E2D9;
+            border-radius: 4px;
+            background: #faf9f7;
+            font-size: 0.8rem;
+            color: #5A5A5A;
+            cursor: pointer;
+            transition: border 0.2s, background 0.2s;
+        }
+        .file-input-wrapper .file-label:hover {
+            border-color: #C9A84C;
+            background: #f5f0eb;
+        }
+        .file-input-wrapper .file-label i {
+            color: #C9A84C;
+            font-size: 1rem;
+        }
+        .file-input-wrapper .file-label .file-name {
+            color: #1A1A1A;
+            font-weight: 500;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Responsive step indicators */
+        @media (max-width: 480px) {
+            .step-indicator .step-dot span:last-child {
+                display: none !important;
+            }
+            .step-indicator .step-line {
+                width: 12px !important;
+            }
+            .step-indicator .step-dot .circle {
+                width: 28px !important;
+                height: 28px !important;
+                font-size: 10px !important;
+            }
+        }
+
+        /* Fix for select dropdown arrow on mobile */
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235A5A5A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            padding-right: 2.5rem;
+        }
+
+        /* Password strength indicator */
+        .strength-bar {
+            height: 4px;
+            border-radius: 4px;
+            background: #f0ede8;
+            overflow: hidden;
+            margin-top: 0.25rem;
+        }
+        .strength-bar .fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 4px;
+            transition: width 0.3s ease, background 0.3s ease;
+        }
     </style>
 </head>
 <body class="font-sans antialiased bg-white text-slate-800 corporate-pattern flex flex-col min-h-screen">
@@ -198,13 +337,12 @@
 
     <!-- ===== SECONDARY INFORMATION STRIP ===== -->
     <div class="bg-white border-b border-brand-border text-brand-dark py-2 text-[10px] tracking-widest text-center uppercase font-semibold">
-        Summit Bank &bull; Global Digital Corporate &amp; Retail Banking
+        SummitFin &bull; Global Digital Corporate &amp; Retail Banking
     </div>
 
     <!-- ===== HEADER ===== -->
     <header class="bg-white/95 backdrop-blur-sm border-b border-brand-border shadow-sm sticky top-0 z-50">
-        <div class="container mx-auto px-4 lg:px-8 py-4 flex items-center justify-between">
-            <!-- Custom SVG Logo -->
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
             <a href="index.html" class="flex items-center gap-3 shrink-0">
                 <svg class="logo-svg" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10 30 L30 10 L50 30 L40 30 L30 18 L20 30 L10 30Z" fill="#C9A84C" />
@@ -213,13 +351,13 @@
                     <rect x="34" y="26" width="2" height="4" fill="#C9A84C" />
                     <rect x="36" y="28" width="2" height="2" fill="#C9A84C" />
                     <text x="46" y="26" font-family="Montserrat, sans-serif" font-weight="800" font-size="20" fill="#0B0B0B" letter-spacing="2">SUMMIT</text>
-                    <text x="46" y="36" font-family="Inter, sans-serif" font-weight="500" font-size="8" fill="#5A5A5A" letter-spacing="3">BANK</text>
+                    <text x="46" y="36" font-family="Inter, sans-serif" font-weight="500" font-size="8" fill="#5A5A5A" letter-spacing="3">FIN</text>
                     <circle cx="120" cy="20" r="4" fill="#C9A84C" opacity="0.3" />
                 </svg>
             </a>
 
-            <div class="flex items-center gap-6 text-xs font-bold uppercase tracking-wider text-brand-slateText">
-                <a href="index.html#support" class="hover:text-brand-gold transition">Contact us</a>
+            <div class="flex items-center gap-4 sm:gap-6 text-xs font-bold uppercase tracking-wider text-brand-slateText">
+                <a href="index.html#support" class="hover:text-brand-gold transition">Contact</a>
                 <a href="login.html" class="hover:text-brand-gold transition">Sign in</a>
             </div>
         </div>
@@ -232,19 +370,18 @@
         <section class="hidden lg:flex lg:col-span-5 enroll-hero-bg p-12 flex-col justify-between text-white relative">
             <div>
                 <div class="flex items-center gap-3 mb-8">
-                    <div class="w-10 h-10 bg-white/10 flex items-center justify-center text-brand-goldLight text-sm font-black rounded-sm">SB</div>
+                    <div class="w-10 h-10 bg-white/10 flex items-center justify-center text-brand-goldLight text-sm font-black rounded-sm">SF</div>
                     <div>
-                        <span class="block text-lg font-bold tracking-tight text-white">Summit Bank</span>
+                        <span class="block text-lg font-bold tracking-tight text-white">SummitFin</span>
                         <span class="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Global Digital Banking</span>
                     </div>
                 </div>
                 <div class="space-y-4 max-w-md z-10">
                     <span class="text-xs font-bold uppercase tracking-widest text-brand-goldLight bg-white/10 px-3 py-1 rounded-full inline-block border border-white/10">Security First</span>
                     <h2 class="text-3xl font-extrabold tracking-tight leading-tight">Start Banking with Us</h2>
-                    <p class="text-slate-300 text-xs leading-relaxed">Create your Summit Bank account in just a few steps and enjoy our full range of banking services.</p>
+                    <p class="text-slate-300 text-xs leading-relaxed">Create your SummitFin account in just a few steps and enjoy our full range of banking services.</p>
                 </div>
 
-                <!-- Features -->
                 <div class="mt-8 space-y-4">
                     <div class="flex items-start gap-3">
                         <div class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center text-brand-goldLight flex-shrink-0">
@@ -276,10 +413,9 @@
                 </div>
             </div>
 
-            <!-- Progress -->
             <div class="z-10 bg-brand-dark/80 p-6 rounded-sm border border-neutral-800 max-w-sm">
                 <div class="flex justify-between text-xs font-bold uppercase tracking-wider mb-2">
-                    <span class="text-slate-300">Step <span id="currentStepDisplay">1</span> of 4</span>
+                    <span class="text-slate-300">Step <span id="currentStepDisplay">1</span> of 5</span>
                     <span class="text-brand-goldLight" id="progressPercent">0%</span>
                 </div>
                 <div class="w-full bg-neutral-800 h-1.5 rounded-full overflow-hidden">
@@ -288,227 +424,321 @@
             </div>
         </section>
 
-        <!-- RIGHT PANEL - FORM -->
-        <section class="col-span-12 lg:col-span-7 bg-white p-6 sm:p-8 lg:p-12 flex flex-col justify-center max-w-3xl mx-auto w-full">
+        <!-- ===== RIGHT PANEL - FORM ===== -->
+        <section class="col-span-12 lg:col-span-7 bg-white p-4 sm:p-6 lg:p-12 flex flex-col max-w-3xl mx-auto w-full">
 
             <!-- Header -->
             <div class="mb-6">
                 <h1 class="text-2xl font-extrabold text-brand-dark tracking-tight sm:text-3xl">Create Your Account</h1>
-                <p class="text-brand-slateText text-xs mt-1">Step <span id="stepNumberDisplay">1</span> of 4</p>
+                <p class="text-brand-slateText text-xs mt-1">Step <span id="stepNumberDisplay">1</span> of 5</p>
             </div>
 
             <!-- Step Indicators -->
-            <div class="flex items-center gap-2 mb-6 step-indicator">
-                <div class="step-dot flex items-center" data-step="1">
+            <div class="flex items-center gap-1 sm:gap-2 mb-6 step-indicator flex-nowrap overflow-x-auto">
+                <div class="step-dot flex items-center shrink-0" data-step="1">
                     <div class="circle w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 border-brand-dark bg-brand-dark text-white">1</div>
                     <span class="text-[8px] font-bold uppercase tracking-wider ml-1 text-brand-dark hidden sm:inline">Personal</span>
                 </div>
-                <div class="w-8 h-0.5 bg-brand-border step-line"></div>
-                <div class="step-dot flex items-center" data-step="2">
+                <div class="w-6 sm:w-8 h-0.5 bg-brand-border step-line shrink-0"></div>
+                <div class="step-dot flex items-center shrink-0" data-step="2">
                     <div class="circle w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 border-brand-border bg-white text-brand-slateText">2</div>
-                    <span class="text-[8px] font-bold uppercase tracking-wider ml-1 text-brand-slateText hidden sm:inline">Contact</span>
+                    <span class="text-[8px] font-bold uppercase tracking-wider ml-1 text-brand-slateText hidden sm:inline">Address</span>
                 </div>
-                <div class="w-8 h-0.5 bg-brand-border step-line"></div>
-                <div class="step-dot flex items-center" data-step="3">
+                <div class="w-6 sm:w-8 h-0.5 bg-brand-border step-line shrink-0"></div>
+                <div class="step-dot flex items-center shrink-0" data-step="3">
                     <div class="circle w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 border-brand-border bg-white text-brand-slateText">3</div>
-                    <span class="text-[8px] font-bold uppercase tracking-wider ml-1 text-brand-slateText hidden sm:inline">Account</span>
+                    <span class="text-[8px] font-bold uppercase tracking-wider ml-1 text-brand-slateText hidden sm:inline">Employment</span>
                 </div>
-                <div class="w-8 h-0.5 bg-brand-border step-line"></div>
-                <div class="step-dot flex items-center" data-step="4">
+                <div class="w-6 sm:w-8 h-0.5 bg-brand-border step-line shrink-0"></div>
+                <div class="step-dot flex items-center shrink-0" data-step="4">
                     <div class="circle w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 border-brand-border bg-white text-brand-slateText">4</div>
+                    <span class="text-[8px] font-bold uppercase tracking-wider ml-1 text-brand-slateText hidden sm:inline">Banking</span>
+                </div>
+                <div class="w-6 sm:w-8 h-0.5 bg-brand-border step-line shrink-0"></div>
+                <div class="step-dot flex items-center shrink-0" data-step="5">
+                    <div class="circle w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 border-brand-border bg-white text-brand-slateText">5</div>
                     <span class="text-[8px] font-bold uppercase tracking-wider ml-1 text-brand-slateText hidden sm:inline">Security</span>
                 </div>
             </div>
 
-            <!-- ===== STEP 1: Personal Info ===== -->
+            <!-- ============================================================ -->
+            <!-- STEP 1: Personal Details                                     -->
+            <!-- ============================================================ -->
             <div class="step-content active" data-step="1">
-                <div class="mb-6">
-                    <h3 class="text-lg font-bold text-brand-dark">Personal Information</h3>
+                <div class="mb-5">
+                    <h3 class="text-lg font-bold text-brand-dark">Personal Details</h3>
                     <p class="text-brand-slateText text-xs">Please provide your legal name as it appears on official documents</p>
                 </div>
 
-                <div class="grid grid-cols-3 gap-4">
-                    <div>
-                        <label class="block text-brand-dark font-bold uppercase tracking-wider text-[10px] mb-1">Legal First Name <span class="text-red-500">*</span></label>
-                        <input type="text" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="First name" />
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>First Name <span class="required">*</span></label>
+                        <input type="text" placeholder="Enter your first name" required />
                     </div>
-                    <div>
-                        <label class="block text-brand-dark font-bold uppercase tracking-wider text-[10px] mb-1">Middle Name</label>
-                        <input type="text" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="Middle name" />
+                    <div class="form-field">
+                        <label>Middle Name <span class="text-brand-slateText font-normal text-[10px]">(Optional)</span></label>
+                        <input type="text" placeholder="Enter your middle name" />
                     </div>
-                    <div>
-                        <label class="block text-brand-dark font-bold uppercase tracking-wider text-[10px] mb-1">Legal Last Name <span class="text-red-500">*</span></label>
-                        <input type="text" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="Last name" />
+                    <div class="form-field">
+                        <label>Last Name <span class="required">*</span></label>
+                        <input type="text" placeholder="Enter your last name" required />
+                    </div>
+                    <div class="form-field">
+                        <label>Date of Birth <span class="required">*</span></label>
+                        <input type="date" required />
+                    </div>
+                    <div class="form-field">
+                        <label>Email Address <span class="required">*</span></label>
+                        <input type="email" placeholder="email@example.com" required />
+                    </div>
+                    <div class="form-field">
+                        <label>Phone Number <span class="required">*</span></label>
+                        <input type="tel" placeholder="+1 (234) 567-8901" required />
                     </div>
                 </div>
 
-                <div class="mt-4">
-                    <label class="block text-brand-dark font-bold uppercase tracking-wider text-[10px] mb-1">Username <span class="text-red-500">*</span></label>
-                    <input type="text" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="Create username" />
-                </div>
-
-                <div class="flex justify-between items-center mt-6 pt-4 border-t border-brand-border">
-                    <span></span>
+                <div class="flex justify-end items-center mt-4 pt-4 border-t border-brand-border">
                     <button onclick="goToStep(2)" class="bg-brand-dark hover:bg-neutral-900 text-white font-bold px-8 py-2.5 rounded-sm text-xs uppercase tracking-wider transition">Next</button>
                 </div>
             </div>
 
-            <!-- ===== STEP 2: Contact Details ===== -->
+            <!-- ============================================================ -->
+            <!-- STEP 2: Address                                               -->
+            <!-- ============================================================ -->
             <div class="step-content" data-step="2">
-                <div class="mb-6">
-                    <h3 class="text-lg font-bold text-brand-dark">Contact Information</h3>
-                    <p class="text-brand-slateText text-xs">We'll use these details to communicate with you about your account</p>
+                <div class="mb-5">
+                    <h3 class="text-lg font-bold text-brand-dark">Address Information</h3>
+                    <p class="text-brand-slateText text-xs">We need your current residential address</p>
                 </div>
 
-                <div>
-                    <label class="block text-brand-dark font-bold uppercase tracking-wider text-[10px] mb-1">Email Address <span class="text-red-500">*</span></label>
-                    <input type="email" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="email@example.com" />
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>Street Address <span class="required">*</span></label>
+                        <input type="text" placeholder="123 Main Street" required />
+                    </div>
+                    <div class="form-field">
+                        <label>House / Apartment Number</label>
+                        <input type="text" placeholder="Apt 4B" />
+                    </div>
+                    <div class="form-field">
+                        <label>City <span class="required">*</span></label>
+                        <input type="text" placeholder="Enter your city" required />
+                    </div>
+                    <div class="form-field">
+                        <label>State / Province <span class="required">*</span></label>
+                        <input type="text" placeholder="Enter state or province" required />
+                    </div>
+                    <div class="form-field">
+                        <label>Zip / Postal Code <span class="required">*</span></label>
+                        <input type="text" placeholder="Enter zip code" required />
+                    </div>
+                    <div class="form-field">
+                        <label>Country <span class="required">*</span></label>
+                        <select required>
+                            <option value="">Select your country</option>
+                            <option value="US">🇺🇸 United States</option>
+                            <option value="GB">🇬🇧 United Kingdom</option>
+                            <option value="CA">🇨🇦 Canada</option>
+                            <option value="AU">🇦🇺 Australia</option>
+                            <option value="ZA">🇿🇦 South Africa</option>
+                            <option value="NG">🇳🇬 Nigeria</option>
+                            <option value="KE">🇰🇪 Kenya</option>
+                            <option value="IN">🇮🇳 India</option>
+                            <option value="DE">🇩🇪 Germany</option>
+                            <option value="FR">🇫🇷 France</option>
+                            <option value="AE">🇦🇪 United Arab Emirates</option>
+                            <option value="SG">🇸🇬 Singapore</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="mt-4">
-                    <label class="block text-brand-dark font-bold uppercase tracking-wider text-[10px] mb-1">Phone Number <span class="text-red-500">*</span></label>
-                    <input type="tel" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="+1 (234) 567-8901" />
-                </div>
-
-                <div class="mt-4">
-                    <label class="block text-brand-dark font-bold uppercase tracking-wider text-[10px] mb-1">Country <span class="text-red-500">*</span></label>
-                    <select class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition">
-                        <option value="">Select your country</option>
-                        <option value="US"><span class="flag-icon flag-icon-us mr-2"></span> United States</option>
-                        <option value="GB"><span class="flag-icon flag-icon-gb mr-2"></span> United Kingdom</option>
-                        <option value="CA"><span class="flag-icon flag-icon-ca mr-2"></span> Canada</option>
-                        <option value="AU"><span class="flag-icon flag-icon-au mr-2"></span> Australia</option>
-                        <option value="ZA"><span class="flag-icon flag-icon-za mr-2"></span> South Africa</option>
-                        <option value="NG"><span class="flag-icon flag-icon-ng mr-2"></span> Nigeria</option>
-                        <option value="KE"><span class="flag-icon flag-icon-ke mr-2"></span> Kenya</option>
-                        <option value="IN"><span class="flag-icon flag-icon-in mr-2"></span> India</option>
-                        <option value="DE"><span class="flag-icon flag-icon-de mr-2"></span> Germany</option>
-                        <option value="FR"><span class="flag-icon flag-icon-fr mr-2"></span> France</option>
-                        <option value="AE"><span class="flag-icon flag-icon-ae mr-2"></span> United Arab Emirates</option>
-                        <option value="SG"><span class="flag-icon flag-icon-sg mr-2"></span> Singapore</option>
-                    </select>
-                </div>
-
-                <div class="flex justify-between items-center mt-6 pt-4 border-t border-brand-border">
+                <div class="flex justify-between items-center mt-4 pt-4 border-t border-brand-border">
                     <button onclick="goToStep(1)" class="border border-brand-border hover:bg-slate-50 text-brand-dark font-bold px-6 py-2.5 rounded-sm text-xs uppercase tracking-wider transition">Previous</button>
                     <button onclick="goToStep(3)" class="bg-brand-dark hover:bg-neutral-900 text-white font-bold px-8 py-2.5 rounded-sm text-xs uppercase tracking-wider transition">Next</button>
                 </div>
             </div>
 
-            <!-- ===== STEP 3: Account Setup ===== -->
+            <!-- ============================================================ -->
+            <!-- STEP 3: Employment Information                               -->
+            <!-- ============================================================ -->
             <div class="step-content" data-step="3">
-                <div class="mb-6">
-                    <h3 class="text-lg font-bold text-brand-dark">Account Setup</h3>
-                    <p class="text-brand-slateText text-xs">Choose your account type and set up your transaction PIN</p>
+                <div class="mb-5">
+                    <h3 class="text-lg font-bold text-brand-dark">Employment Information</h3>
+                    <p class="text-brand-slateText text-xs">Tell us about your occupation and income</p>
                 </div>
 
-                <div>
-                    <label class="block text-brand-dark font-bold uppercase tracking-wider text-[10px] mb-2">Account Type <span class="text-red-500">*</span></label>
-                    <div class="account-types-grid grid grid-cols-1 sm:grid-cols-2 gap-3" id="accountTypesGrid">
-                        <div class="account-option selected border-2 border-brand-gold bg-brand-gold/5 rounded-sm p-3 flex items-center gap-3" data-type="checking">
-                            <div class="w-8 h-8 rounded-full border-2 border-brand-border flex items-center justify-center radio-dot flex-shrink-0"></div>
-                            <div>
-                                <p class="font-bold text-brand-dark text-sm">Checking Account</p>
-                                <p class="text-brand-slateText text-[10px]">Perfect for daily transactions and bill payments</p>
-                            </div>
-                        </div>
-                        <div class="account-option border border-brand-border rounded-sm p-3 flex items-center gap-3" data-type="savings">
-                            <div class="w-8 h-8 rounded-full border-2 border-brand-border flex items-center justify-center radio-dot flex-shrink-0"></div>
-                            <div>
-                                <p class="font-bold text-brand-dark text-sm">Savings Account</p>
-                                <p class="text-brand-slateText text-[10px]">Earn interest on your deposits</p>
-                            </div>
-                        </div>
-                        <div class="account-option border border-brand-border rounded-sm p-3 flex items-center gap-3 hidden-option" data-type="fixed">
-                            <div class="w-8 h-8 rounded-full border-2 border-brand-border flex items-center justify-center radio-dot flex-shrink-0"></div>
-                            <div>
-                                <p class="font-bold text-brand-dark text-sm">Fixed Deposit</p>
-                                <p class="text-brand-slateText text-[10px]">Highest interest rates for fixed terms</p>
-                            </div>
-                        </div>
-                        <div class="account-option border border-brand-border rounded-sm p-3 flex items-center gap-3 hidden-option" data-type="business">
-                            <div class="w-8 h-8 rounded-full border-2 border-brand-border flex items-center justify-center radio-dot flex-shrink-0"></div>
-                            <div>
-                                <p class="font-bold text-brand-dark text-sm">Business Account</p>
-                                <p class="text-brand-slateText text-[10px]">For small to medium businesses</p>
-                            </div>
-                        </div>
-                        <div class="account-option border border-brand-border rounded-sm p-3 flex items-center gap-3 hidden-option" data-type="investment">
-                            <div class="w-8 h-8 rounded-full border-2 border-brand-border flex items-center justify-center radio-dot flex-shrink-0"></div>
-                            <div>
-                                <p class="font-bold text-brand-dark text-sm">Investment Account</p>
-                                <p class="text-brand-slateText text-[10px]">For stocks and securities</p>
-                            </div>
-                        </div>
-                        <div class="account-option border border-brand-border rounded-sm p-3 flex items-center gap-3 hidden-option" data-type="premium">
-                            <div class="w-8 h-8 rounded-full border-2 border-brand-border flex items-center justify-center radio-dot flex-shrink-0"></div>
-                            <div>
-                                <p class="font-bold text-brand-dark text-sm">Premium Account</p>
-                                <p class="text-brand-slateText text-[10px]">Exclusive benefits and priority service</p>
-                            </div>
-                        </div>
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>Occupation <span class="required">*</span></label>
+                        <select required>
+                            <option value="">Select type of employment</option>
+                            <option value="employed">Employed (Full-Time)</option>
+                            <option value="part-time">Employed (Part-Time)</option>
+                            <option value="self-employed">Self-Employed</option>
+                            <option value="business">Business Owner</option>
+                            <option value="student">Student</option>
+                            <option value="retired">Retired</option>
+                            <option value="unemployed">Unemployed</option>
+                            <option value="other">Other</option>
+                        </select>
                     </div>
-                    <button onclick="toggleAccountTypes()" class="text-brand-gold hover:underline font-semibold text-xs mt-2" id="showMoreBtn">
-                        <i class="fas fa-chevron-down mr-1"></i> Show more account types
-                    </button>
-                </div>
-
-                <div class="mt-4">
-                    <label class="block text-brand-dark font-bold uppercase tracking-wider text-[10px] mb-1">Transaction PIN (4 digits) <span class="text-red-500">*</span></label>
-                    <div class="flex gap-2">
-                        <input type="password" maxlength="1" class="pin-digit w-12 h-12 text-center text-lg font-bold border-2 border-brand-border rounded-sm bg-slate-50 focus:outline-none focus:border-brand-gold transition" />
-                        <input type="password" maxlength="1" class="pin-digit w-12 h-12 text-center text-lg font-bold border-2 border-brand-border rounded-sm bg-slate-50 focus:outline-none focus:border-brand-gold transition" />
-                        <input type="password" maxlength="1" class="pin-digit w-12 h-12 text-center text-lg font-bold border-2 border-brand-border rounded-sm bg-slate-50 focus:outline-none focus:border-brand-gold transition" />
-                        <input type="password" maxlength="1" class="pin-digit w-12 h-12 text-center text-lg font-bold border-2 border-brand-border rounded-sm bg-slate-50 focus:outline-none focus:border-brand-gold transition" />
+                    <div class="form-field">
+                        <label>Employer Name</label>
+                        <input type="text" placeholder="Enter employer name" />
                     </div>
-                    <p class="text-brand-slateText text-[10px] mt-1">Your PIN will be required to authorize transactions</p>
+                    <div class="form-field">
+                        <label>Annual Income Range <span class="required">*</span></label>
+                        <select required>
+                            <option value="">Select salary range</option>
+                            <option value="under-25k">Under $25,000</option>
+                            <option value="25-50k">$25,000 – $50,000</option>
+                            <option value="50-75k">$50,000 – $75,000</option>
+                            <option value="75-100k">$75,000 – $100,000</option>
+                            <option value="100-150k">$100,000 – $150,000</option>
+                            <option value="150-250k">$150,000 – $250,000</option>
+                            <option value="over-250k">Over $250,000</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label>Source of Funds <span class="required">*</span></label>
+                        <select required>
+                            <option value="">Select source</option>
+                            <option value="salary">Salary / Wages</option>
+                            <option value="business">Business Income</option>
+                            <option value="investments">Investments</option>
+                            <option value="inheritance">Inheritance</option>
+                            <option value="savings">Savings</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="flex justify-between items-center mt-6 pt-4 border-t border-brand-border">
+                <div class="flex justify-between items-center mt-4 pt-4 border-t border-brand-border">
                     <button onclick="goToStep(2)" class="border border-brand-border hover:bg-slate-50 text-brand-dark font-bold px-6 py-2.5 rounded-sm text-xs uppercase tracking-wider transition">Previous</button>
                     <button onclick="goToStep(4)" class="bg-brand-dark hover:bg-neutral-900 text-white font-bold px-8 py-2.5 rounded-sm text-xs uppercase tracking-wider transition">Next</button>
                 </div>
             </div>
 
-            <!-- ===== STEP 4: Security ===== -->
+            <!-- ============================================================ -->
+            <!-- STEP 4: Banking Details                                      -->
+            <!-- ============================================================ -->
             <div class="step-content" data-step="4">
-                <div class="mb-6">
-                    <h3 class="text-lg font-bold text-brand-dark">Secure Your Account</h3>
-                    <p class="text-brand-slateText text-xs">Create a strong password to protect your account</p>
+                <div class="mb-5">
+                    <h3 class="text-lg font-bold text-brand-dark">Banking Details</h3>
+                    <p class="text-brand-slateText text-xs">Set up your account preferences</p>
                 </div>
 
-                <div>
-                    <label class="block text-brand-dark font-bold uppercase tracking-wider text-[10px] mb-1">Password <span class="text-red-500">*</span></label>
-                    <input type="password" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="Create a strong password" />
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>SSN / SIN (or equivalent) <span class="required">*</span></label>
+                        <input type="text" placeholder="XXX-XX-XXXX" required />
+                    </div>
+                    <div class="form-field">
+                        <label>Account Type <span class="required">*</span></label>
+                        <select required>
+                            <option value="">Please select account type</option>
+                            <option value="checking">Checking Account</option>
+                            <option value="savings">Savings Account</option>
+                            <option value="business">Business Account</option>
+                            <option value="premium">Premium Account</option>
+                            <option value="fixed">Fixed Deposit</option>
+                            <option value="investment">Investment Account</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label>Account Currency <span class="required">*</span></label>
+                        <select required>
+                            <option value="USD">🇺🇸 America (United States) Dollars – USD</option>
+                            <option value="EUR">🇪🇺 Euro – EUR</option>
+                            <option value="GBP">🇬🇧 British Pound – GBP</option>
+                            <option value="CAD">🇨🇦 Canadian Dollar – CAD</option>
+                            <option value="AUD">🇦🇺 Australian Dollar – AUD</option>
+                            <option value="ZAR">🇿🇦 South African Rand – ZAR</option>
+                            <option value="NGN">🇳🇬 Nigerian Naira – NGN</option>
+                            <option value="KES">🇰🇪 Kenyan Shilling – KES</option>
+                            <option value="INR">🇮🇳 Indian Rupee – INR</option>
+                            <option value="AED">🇦🇪 UAE Dirham – AED</option>
+                            <option value="SGD">🇸🇬 Singapore Dollar – SGD</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label>Passport Photograph <span class="required">*</span></label>
+                        <div class="file-input-wrapper">
+                            <div class="file-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span class="file-name">No file chosen</span>
+                            </div>
+                            <input type="file" accept="image/*" required onchange="updateFileName(this)" />
+                        </div>
+                        <p class="text-brand-slateText text-[10px] mt-1">Accepted formats: JPG, PNG, PDF. Max size: 5MB</p>
+                    </div>
                 </div>
 
-                <div class="mt-4">
-                    <label class="block text-brand-dark font-bold uppercase tracking-wider text-[10px] mb-1">Confirm Password <span class="text-red-500">*</span></label>
-                    <input type="password" class="w-full bg-slate-50 border border-brand-border rounded-sm p-2.5 text-brand-dark focus:outline-none focus:border-brand-gold text-sm transition" placeholder="Confirm your password" />
-                </div>
-
-                <div class="mt-3 flex flex-wrap gap-2">
-                    <span class="text-[10px] text-brand-slateText bg-slate-100 px-2 py-1 rounded-sm flex items-center gap-1">
-                        <svg class="w-3 h-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        8+ characters
-                    </span>
-                    <span class="text-[10px] text-brand-slateText bg-slate-100 px-2 py-1 rounded-sm flex items-center gap-1">
-                        <svg class="w-3 h-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        Uppercase & lowercase
-                    </span>
-                    <span class="text-[10px] text-brand-slateText bg-slate-100 px-2 py-1 rounded-sm flex items-center gap-1">
-                        <svg class="w-3 h-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        Number & symbol
-                    </span>
-                </div>
-
-                <div class="mt-4 flex items-start gap-2">
-                    <input type="checkbox" id="termsCheck" class="mt-1 w-4 h-4 text-brand-dark border-brand-border rounded-sm focus:ring-brand-gold cursor-pointer" />
-                    <label for="termsCheck" class="text-xs text-brand-slateText cursor-pointer">I agree to the <a href="#" class="text-brand-gold font-semibold hover:underline">Terms of Service</a> and <a href="#" class="text-brand-gold font-semibold hover:underline">Privacy Policy</a></label>
-                </div>
-
-                <div class="flex justify-between items-center mt-6 pt-4 border-t border-brand-border">
+                <div class="flex justify-between items-center mt-4 pt-4 border-t border-brand-border">
                     <button onclick="goToStep(3)" class="border border-brand-border hover:bg-slate-50 text-brand-dark font-bold px-6 py-2.5 rounded-sm text-xs uppercase tracking-wider transition">Previous</button>
+                    <button onclick="goToStep(5)" class="bg-brand-dark hover:bg-neutral-900 text-white font-bold px-8 py-2.5 rounded-sm text-xs uppercase tracking-wider transition">Next</button>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- STEP 5: Security                                              -->
+            <!-- ============================================================ -->
+            <div class="step-content" data-step="5">
+                <div class="mb-5">
+                    <h3 class="text-lg font-bold text-brand-dark">Secure Your Account</h3>
+                    <p class="text-brand-slateText text-xs">Create a strong password and set up your security PIN</p>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>2FA PIN (4 digits) <span class="required">*</span></label>
+                        <div class="flex gap-2">
+                            <input type="password" maxlength="1" class="pin-digit w-12 h-12 text-center text-lg font-bold border-2 border-brand-border rounded-sm bg-slate-50 focus:outline-none focus:border-brand-gold transition" />
+                            <input type="password" maxlength="1" class="pin-digit w-12 h-12 text-center text-lg font-bold border-2 border-brand-border rounded-sm bg-slate-50 focus:outline-none focus:border-brand-gold transition" />
+                            <input type="password" maxlength="1" class="pin-digit w-12 h-12 text-center text-lg font-bold border-2 border-brand-border rounded-sm bg-slate-50 focus:outline-none focus:border-brand-gold transition" />
+                            <input type="password" maxlength="1" class="pin-digit w-12 h-12 text-center text-lg font-bold border-2 border-brand-border rounded-sm bg-slate-50 focus:outline-none focus:border-brand-gold transition" />
+                        </div>
+                        <p class="text-brand-slateText text-[10px] mt-1">Your PIN will be required to authorize transactions</p>
+                    </div>
+
+                    <div class="form-field">
+                        <label>Password <span class="required">*</span></label>
+                        <input type="password" placeholder="Create a strong password" required oninput="checkPasswordStrength(this.value)" />
+                        <div class="strength-bar">
+                            <div class="fill" id="strengthFill"></div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mt-1.5">
+                            <span class="text-[10px] text-brand-slateText bg-slate-100 px-2 py-0.5 rounded-sm flex items-center gap-1">
+                                <svg class="w-3 h-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                8+ characters
+                            </span>
+                            <span class="text-[10px] text-brand-slateText bg-slate-100 px-2 py-0.5 rounded-sm flex items-center gap-1">
+                                <svg class="w-3 h-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                Uppercase & lowercase
+                            </span>
+                            <span class="text-[10px] text-brand-slateText bg-slate-100 px-2 py-0.5 rounded-sm flex items-center gap-1">
+                                <svg class="w-3 h-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                Number & symbol
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label>Confirm Password <span class="required">*</span></label>
+                        <input type="password" placeholder="Confirm your password" required />
+                    </div>
+
+                    <div class="form-field">
+                        <label>Terms & Conditions</label>
+                        <div class="flex items-start gap-2 mt-1">
+                            <input type="checkbox" id="termsCheck" class="mt-0.5 w-4 h-4 text-brand-dark border-brand-border rounded-sm focus:ring-brand-gold cursor-pointer" />
+                            <label for="termsCheck" class="text-xs text-brand-slateText cursor-pointer">I agree to the <a href="#" class="text-brand-gold font-semibold hover:underline">Terms of Service</a> and <a href="#" class="text-brand-gold font-semibold hover:underline">Privacy Policy</a></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center mt-4 pt-4 border-t border-brand-border">
+                    <button onclick="goToStep(4)" class="border border-brand-border hover:bg-slate-50 text-brand-dark font-bold px-6 py-2.5 rounded-sm text-xs uppercase tracking-wider transition">Previous</button>
                     <button onclick="submitForm()" class="bg-brand-gold hover:bg-brand-goldLight text-white font-bold px-8 py-2.5 rounded-sm text-xs uppercase tracking-wider transition shadow-md">
                         <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
                         Create Account
@@ -516,7 +746,7 @@
                 </div>
 
                 <p class="text-center text-xs text-brand-slateText mt-4">
-                    Already have an account? <a href="login.html" class="text-brand-gold font-semibold hover:underline">Sign in instead</a>
+                    Already have an account? <a href="login.html" class="text-brand-gold font-semibold hover:underline">Sign in</a>
                 </p>
             </div>
 
@@ -525,7 +755,7 @@
 
     <!-- ===== TRUST BADGES ===== -->
     <section class="py-6 bg-white border-t border-brand-border">
-        <div class="container mx-auto px-4 lg:px-8">
+        <div class="container mx-auto px-4">
             <div class="flex flex-wrap justify-center items-center gap-6 md:gap-10 text-xs font-semibold uppercase tracking-wider text-brand-slateText">
                 <span class="flex items-center gap-2 trust-badge">
                     <svg class="w-4 h-4 text-brand-gold" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
@@ -549,7 +779,7 @@
 
     <!-- ===== FOOTER ===== -->
     <footer class="bg-brand-dark border-t border-neutral-800 text-neutral-400 py-8 text-xs">
-        <div class="container mx-auto px-4 lg:px-8">
+        <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row items-center justify-between gap-4">
                 <div class="flex flex-wrap justify-center gap-6 font-semibold">
                     <a href="#" class="hover:text-white transition">Privacy</a>
@@ -557,26 +787,27 @@
                     <a href="#" class="hover:text-white transition">Accessibility</a>
                     <a href="#" class="hover:text-white transition">Terms of use</a>
                 </div>
-                <div class="text-neutral-500 font-medium">&copy; 2026 Summit Bank. All rights reserved.</div>
+                <div class="text-neutral-500 font-medium">&copy; 2026 SummitFin. All rights reserved.</div>
             </div>
         </div>
     </footer>
 
+    <!-- ===== FONT AWESOME ===== -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
     <!-- ===== JAVASCRIPT ===== -->
     <script>
         let currentStep = 1;
-        const totalSteps = 4;
+        const totalSteps = 5;
 
         // Step Navigation
         function goToStep(step) {
             if (step < 1 || step > totalSteps) return;
             currentStep = step;
 
-            // Update step content
             document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
             document.querySelector(`.step-content[data-step="${step}"]`).classList.add('active');
 
-            // Update step indicators
             document.querySelectorAll('.step-dot').forEach((dot, index) => {
                 const num = index + 1;
                 const circle = dot.querySelector('.circle');
@@ -594,16 +825,14 @@
                 }
             });
 
-            // Update step lines
             document.querySelectorAll('.step-line').forEach((line, index) => {
                 if (index < step - 1) {
-                    line.className = 'w-8 h-0.5 bg-brand-dark step-line';
+                    line.className = 'w-6 sm:w-8 h-0.5 bg-brand-dark step-line shrink-0';
                 } else {
-                    line.className = 'w-8 h-0.5 bg-brand-border step-line';
+                    line.className = 'w-6 sm:w-8 h-0.5 bg-brand-border step-line shrink-0';
                 }
             });
 
-            // Update progress
             document.getElementById('stepNumberDisplay').textContent = step;
             document.getElementById('currentStepDisplay').textContent = step;
             const percent = Math.round((step / totalSteps) * 100);
@@ -611,34 +840,6 @@
             document.getElementById('progressBar').style.width = percent + '%';
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Account Type Selection
-        document.querySelectorAll('.account-option').forEach(option => {
-            option.addEventListener('click', function() {
-                document.querySelectorAll('.account-option').forEach(o => {
-                    o.classList.remove('selected', 'border-2', 'border-brand-gold', 'bg-brand-gold/5');
-                    o.classList.add('border', 'border-brand-border');
-                });
-                this.classList.add('selected', 'border-2', 'border-brand-gold', 'bg-brand-gold/5');
-                this.classList.remove('border', 'border-brand-border');
-            });
-        });
-
-        // Show More Account Types
-        let showMoreExpanded = false;
-
-        function toggleAccountTypes() {
-            showMoreExpanded = !showMoreExpanded;
-            const hiddenOptions = document.querySelectorAll('.hidden-option');
-            const btn = document.getElementById('showMoreBtn');
-            if (showMoreExpanded) {
-                hiddenOptions.forEach(el => el.classList.remove('hidden-option'));
-                btn.innerHTML = '<i class="fas fa-chevron-up mr-1"></i> Show fewer account types';
-            } else {
-                hiddenOptions.forEach(el => el.classList.add('hidden-option'));
-                btn.innerHTML = '<i class="fas fa-chevron-down mr-1"></i> Show more account types';
-            }
         }
 
         // PIN Input
@@ -656,6 +857,39 @@
             });
         });
 
+        // File input
+        function updateFileName(input) {
+            const label = input.closest('.file-input-wrapper').querySelector('.file-name');
+            if (input.files && input.files.length > 0) {
+                label.textContent = input.files[0].name;
+            } else {
+                label.textContent = 'No file chosen';
+            }
+        }
+
+        // Password strength
+        function checkPasswordStrength(password) {
+            const fill = document.getElementById('strengthFill');
+            let score = 0;
+            if (password.length >= 8) score++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) score++;
+            if (/\d/.test(password)) score++;
+            if (/[^a-zA-Z0-9]/.test(password)) score++;
+
+            const percent = (score / 4) * 100;
+            fill.style.width = percent + '%';
+
+            if (percent < 25) {
+                fill.style.background = '#D94352';
+            } else if (percent < 50) {
+                fill.style.background = '#E8A838';
+            } else if (percent < 75) {
+                fill.style.background = '#C9A84C';
+            } else {
+                fill.style.background = '#2D9B4E';
+            }
+        }
+
         // Form Submit
         function submitForm() {
             const terms = document.getElementById('termsCheck');
@@ -663,7 +897,7 @@
                 alert('Please agree to the Terms of Service and Privacy Policy.');
                 return;
             }
-            alert('Account created successfully!\n\nWelcome to Summit Bank!\n\nWe have sent a confirmation to your inbox.');
+            alert('✅ Account created successfully!\n\nWelcome to SummitFin!\n\nWe have sent a confirmation to your email.');
             window.location.href = 'dashboard.html';
         }
 
@@ -672,9 +906,6 @@
             goToStep(1);
         });
     </script>
-
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
 </body>
 </html>
